@@ -7,7 +7,7 @@ how they change over time, and their relationships to one another.
 of a demographic model.
 
 Please see the [documentation](https://popsim-consortium.github.io/demes-docs/latest/index.html)
-for more details.
+for more details on Demes.
 
 ## Goals
 - A simple declarative high-level format for specifying demographic models. This format is
