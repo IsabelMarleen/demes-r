@@ -27,9 +27,9 @@ load_deme <- function(filepath){
     out$doi<- list()
   }
 
-  if (is.null(inp$metadata)){
-    out$metadata <- list()
-  }
+  # if (is.null(inp$metadata)){
+  #   out$metadata <- list()
+  # }
 
   for (i in 1:length(inp$demes)){
     if (is.null(inp$demes[[i]]$ancestors)){
@@ -45,18 +45,48 @@ load_deme <- function(filepath){
       out$demes[[i]]$proportions <- list()
     }
 
-    if (is.null(inp$demes[[i]]$epochs)){
-      out$demes[[i]]$epochs <- list()
-      # inp$epochs <- data.frame(end_time=c(0), start_size=c(1000), size_function="constant", selfing_rate=c(0), cloning_rate=c(0))
-      # Create empty sub items for all the
+    comparison_group <- c("end_time", "end_size", "start_size", "size_function", "selfing_rate", "cloning_rate")
+    for(j in 1:length(inp$demes[[i]]$epochs)){
+      present_epoch <- c(names(inp$demes[[i]]$epochs[[j]]))
+      missing_epoch <- setdiff(comparison_group, present_epoch)
+
+      if (is.null(inp$demes[[i]]$epochs)){
+        out$demes[[i]]$epochs <- list()
+        out$demes[[i]]$epochs[[1]]$end_time <- 0
+        out$demes[[i]]$epochs[[1]]$start_size <- 0
+        out$demes[[i]]$epochs[[1]]$end_size <- 0
+        out$demes[[i]]$epochs[[1]]$size_function <- "constant"
+        out$demes[[i]]$epochs[[1]]$selfing_rate <- 0
+        out$demes[[i]]$epochs[[1]]$cloning_rate <- 0
+      } else if (length(missing_epoch) != 0){
+
+        if(is.null(inp$demes[[i]]$epochs[[1]]$end_time)){
+          out$demes[[i]]$epochs[[1]]$end_time <- 0
+        }
+
+        if(is.null(inp$demes[[i]]$epochs[[1]]$end_size)){
+          out$demes[[i]]$epochs[[1]]$end_time <- out$demes[[i]]$epochs[[1]]$start_size
+        }
+
+        if(is.null(inp$demes[[i]]$epochs[[1]]$size_function)){
+          out$demes[[i]]$epochs[[1]]$size_function <- "constant"
+        }
+        if(is.null(inp$demes[[i]]$epochs[[1]]$selfing_rate)){
+          out$demes[[i]]$epochs[[1]]$selfing_rate <- 0
+        }
+        if(is.null(inp$demes[[i]]$epochs[[1]]$cloning_rate)){
+          out$demes[[i]]$epochs[[1]]$cloning_rate <- 0
+        }
+
+      }
     }
 
-    if (is.null(inp$demes[[i]]$migrations)){
-      out$demes[[i]]$migrations <- list()
+    if (is.null(inp$migrations)){
+      out$migrations <- list()
     }
 
-    if (is.null(inp$demes[[i]]$pulses)){
-      out$demes[[i]]$pulses <- list()
+    if (is.null(inp$pulses)){
+      out$pulses <- list()
     }
   }
 
