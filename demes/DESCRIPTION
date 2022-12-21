@@ -4,12 +4,13 @@ Title: R Parser for Demes Population Models
 Version: 0.1.0
 Author: Isabel M. Pötzsch
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: The demes R package provides an API for parsing Demes demographic models.
+    A demographic model describes one or more demes (or populations), how they change over time, and their relationships to one another. `demes` provides a self-contained and unambiguous in-memory description of a demographic model.
 License: MIT License
 Encoding: UTF-8
 LazyData: true
 Imports: 
+    reticulate,
     yaml
 Suggests: 
     testthat (>= 3.0.0)
