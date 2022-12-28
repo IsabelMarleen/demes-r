@@ -11,6 +11,9 @@ test_that("example 03 is parsed correctly", {
   expect_true(identical(d$pulses, list()))
   expect_true(d$demes[[1]]$epochs[[1]]$start_size == 1000)
   expect_true(d$demes[[1]]$name ==  "A")
+
+  # Check that there are no additional list entries
+  # Make it a verbose test, make a list of expected entries, then use set operations to report what the problem is
 })
 
 
@@ -25,3 +28,15 @@ preparsed_yaml <- yaml::read_yaml("../../../ex03_preparsed.yaml")
 test_that("example 03 is parsed the same way as C-parser does", {
   expect_true(identical(preparsed_deme, preparsed_yaml))
 })
+
+
+reticulate::py_install('ruamel.yaml', pip = FALSE)
+reticulate::py_install('yaml')
+reticulate::py_run_string("import os; os.system('python ../demes-spec/reference_implementation/resolve_yaml.py ../demes-spec/test-cases/valid/structure_01.yaml > tests/testthat/py_json_temp/valid/structure_01.json')")
+#reticulate::py_run_string("import sys, json; print(yaml.dump(json.loads(sys.stdin.read('tests/testthat/py_json_temp/valid/structure_01.json'))))")
+#python -c 'import sys, yaml, json; print(yaml.dump(json.loads(sys.stdin.read())))' <input.json
+
+
+# test_that("example ", {
+#   expect_true()
+# })
