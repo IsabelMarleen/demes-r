@@ -17,3 +17,14 @@ load_deme(file, text)
 \description{
 More description
 }
+\examples{
+\dontrun{file_name <- "test_file.yaml"
+a <- load_deme(file=file_name)}
+
+file_string <- "time_units: generations
+demes:
+  - name: A
+epochs:
+  - start_size: 1000"
+b <- load_deme(text=file_string)
+}

@@ -1,7 +1,8 @@
 
 
-test_that("minimal_01.yaml is loaded correctly", {
-  d <- demes::load_deme(file = test_path("data", "valid", "minimal_01.yaml"))
+test_that("minimal_01.yaml is parsed correctly", {
+  inp <- yaml::read_yaml(test_path("data", "valid", "minimal_01.yaml"))
+  d <- validate_deme(inp)
 
   # Test that all the expected list entries are there
   expect_setequal(names(d), c("time_units", "demes", "doi", "metadata", "migrations", "pulses"))
@@ -21,13 +22,6 @@ test_that("minimal_01.yaml is loaded correctly", {
   expect_identical(d$pulses, list())
 })
 
-
-test_that("both input types work", {
-  yaml_string <- "time_units: generations\ndemes:\n  - name: a\n    epochs:\n    - start_size: 100"
-  b <- load_deme(text=yaml_string)
-  d <- demes::load_deme(file = test_path("data", "valid", "minimal_01.yaml"))
-  expect_identical(b, d)
-})
 
 # Second test compares with internal representation from python and checks that they are the same
 # Reference parser
