@@ -1,19 +1,28 @@
-filepath <- "../ex03.yaml"
+#filepath <- "../ex03.yaml"
 
 
 #' Load and Validate a Demes Model
 #'
 #' More description
 #'
-#' @param filepath
-#'
+#' @param file either a character string naming a file or a connection open for writing
+#' @param text character string: if file is not supplied and this is, then data are read from the value of text via a text connection. Notice that a literal string can be used to include (small) data sets within R code.
 #' @return \code{out}
 #' @export
 #'
 #' @examples
-load_deme <- function(filepath){
+#' file_name <- "test_file.yaml"
+#' load_deme(file=file_name)
+#'
+#' file_string <- "time_units: generations
+#' demes:
+#'   - name: A
+#' epochs:
+#'   - start_size: 1000"
+#' load_deme(text=file_string)
+load_deme <- function(file, text){
 
-  inp <- yaml::read_yaml(filepath)
+  inp <- yaml::read_yaml(file)
   out <- inp
 
 
@@ -93,7 +102,7 @@ load_deme <- function(filepath){
   return(out)
 }
 
-test_out <- load_deme(filepath)
+# test_out <- load_deme(filepath)
 #
 # metadata: {}
 # demes:

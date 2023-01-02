@@ -1,6 +1,7 @@
-d <- load_deme("../../../ex03.yaml")
+
 
 test_that("example 03 is parsed correctly", {
+  d <- demes::load_deme(test_path("data", "ex03.yaml"))
   expect_true(d$time_units == "generations")
   expect_true(identical(d$doi, list()))
   #expect_true(identical(d$metadata, list()))
@@ -22,20 +23,17 @@ test_that("example 03 is parsed correctly", {
 # Or look at c parser
 # identical() can compare two nested lists
 
-preparsed_deme <- load_deme("../../../ex03_preparsed.yaml")
-preparsed_yaml <- yaml::read_yaml("../../../ex03_preparsed.yaml")
 # Could check that parsing the python pre-parsed file does not change anything
 test_that("example 03 is parsed the same way as C-parser does", {
+  preparsed_deme <- demes::load_deme(test_path("data", "ex03_preparsed.yaml"))
+  preparsed_yaml <- yaml::read_yaml(test_path("data", "ex03_preparsed.yaml"))
   expect_true(identical(preparsed_deme, preparsed_yaml))
 })
 
 
-reticulate::py_install('ruamel.yaml', pip = FALSE)
-reticulate::py_run_string("import os; os.system('python ../demes-spec/reference_implementation/resolve_yaml.py ../demes-spec/test-cases/valid/structure_01.yaml > tests/testthat/py_json_temp/valid/structure_01.json')")
-reticulate::py_run_file("tests/testthat/parse_ref_test_cases.py")
-
-
-
-# test_that("example ", {
-#   expect_true()
+# test_that("parser does the same as python reference implementation", {
+#   #expect_true()
+#   reticulate::py_install('ruamel.yaml', pip = FALSE)
+#   reticulate::py_run_string("import os; os.system('python demes-spec/reference_implementation/resolve_yaml.py demes-spec/test-cases/valid/structure_01.yaml > tests/testthat/py_json_temp/valid/structure_01.json')")
+#   reticulate::py_run_file("tests/testthat/parse_ref_test_cases.py")
 # })

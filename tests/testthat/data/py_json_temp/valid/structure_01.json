@@ -1,0 +1,1711 @@
+{
+  "time_units": "generations",
+  "generation_time": 1,
+  "doi": [],
+  "description": "",
+  "metadata": {},
+  "demes": [
+    {
+      "name": "deme1",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme2",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme3",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme4",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme5",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme6",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme7",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme8",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme9",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme10",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme11",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme12",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme13",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme14",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme15",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme16",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme17",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme18",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme19",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme20",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme21",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme22",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme23",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme24",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme25",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme26",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme27",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme28",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme29",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme30",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme31",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme32",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme33",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme34",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme35",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme36",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme37",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme38",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme39",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme40",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme41",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme42",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme43",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme44",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme45",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme46",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme47",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme48",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme49",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme50",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme51",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme52",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme53",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme54",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme55",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme56",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme57",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme58",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme59",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme60",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme61",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme62",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme63",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme64",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme65",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme66",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme67",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme68",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme69",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme70",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme71",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme72",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme73",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme74",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme75",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme76",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme77",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme78",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme79",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme80",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme81",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme82",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme83",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme84",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme85",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme86",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme87",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme88",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme89",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme90",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme91",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme92",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme93",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme94",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme95",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme96",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme97",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme98",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme99",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    },
+    {
+      "name": "deme100",
+      "description": "",
+      "start_time": "Infinity",
+      "epochs": [
+        {
+          "end_time": 0,
+          "start_size": 100,
+          "end_size": 100,
+          "size_function": "constant",
+          "selfing_rate": 0,
+          "cloning_rate": 0
+        }
+      ],
+      "proportions": [],
+      "ancestors": []
+    }
+  ],
+  "migrations": [],
+  "pulses": []
+}
