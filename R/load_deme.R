@@ -19,7 +19,7 @@ load_deme <- function(file, text){
     inp <- yaml::read_yaml(text = text)
   } else if (!missing(file) && missing(text)) {
     inp <- yaml::read_yaml(file = file)
-    text = NULL
+    text <- NULL
   } else {
     stop("Either filepath or text must be supplied.", call. = FALSE)
   }

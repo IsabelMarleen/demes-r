@@ -34,9 +34,20 @@ test_that("minimal_01.yaml is parsed correctly", {
 #   expect_identical(preparsed_deme, preparsed_yaml)
 # })
 
-# test_that("parser does the same as python reference implementation", {
-#   #expect_true()
-#   reticulate::py_install('ruamel.yaml', pip = FALSE)
-#   reticulate::py_run_string("import os; os.system('python demes-spec/reference_implementation/resolve_yaml.py demes-spec/test-cases/valid/structure_01.yaml > tests/testthat/py_json_temp/valid/structure_01.json')")
-#   reticulate::py_run_file("tests/testthat/parse_ref_test_cases.py")
-# })
+test_that("parser does the same as python reference implementation", {
+  #expect_true()
+  #python_packages <- c("ruamel.yaml")
+
+  #reticulate::virtualenv_create("r-reticulate", Sys.which("python"))
+  #reticulate::virtualenv_install("r-reticulate", python_packages)
+
+  #path_to_python <- virtualenv_python("r-reticulate")
+  reticulate::py_install('ruamel.yaml', pip = FALSE)
+  reticulate::py_run_string("import os; os.system('python demes-spec/reference_implementation/resolve_yaml.py demes-spec/test-cases/valid/structure_01.yaml > tests/testthat/py_json_temp/valid/structure_01.json')")
+  # json is a subset of yaml, so yaml reader should be able to read json file directly
+  reticulate::py_run_file("tests/testthat/parse_ref_test_cases.py")
+
+  test_deme <- demes::load_deme(test_path("data", "ex03_preparsed.yaml"))
+  true_deme <- yaml::read_yaml(test_path("data", "ex03_preparsed.yaml"))
+  expect_identical()
+})

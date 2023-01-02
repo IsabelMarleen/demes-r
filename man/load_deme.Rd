@@ -21,10 +21,6 @@ More description
 \dontrun{file_name <- "test_file.yaml"
 a <- load_deme(file=file_name)}
 
-file_string <- "time_units: generations
-demes:
-  - name: A
-epochs:
-  - start_size: 1000"
-b <- load_deme(text=file_string)
+yaml_string <- "time_units: generations\ndemes:\n  - name: a\n    epochs:\n    - start_size: 100"
+b <- load_deme(text=yaml_string)
 }
