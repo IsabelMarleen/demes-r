@@ -65,4 +65,3 @@ test_that("parser does the same as python reference implementation", {
   #       This is done to avoid type errors for users, when default values like 0, read as an integer by read_yaml() are changed interactively
   #   3) 1) and 2) mean that an extra processing step has to happen to the true comparison object in the testing
 })
-
