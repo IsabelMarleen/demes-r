@@ -9,10 +9,10 @@ Description: The demes R package provides an API for parsing Demes demographic m
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: 
-    reticulate,
+Imports:
     yaml
 Suggests: 
+    reticulate,
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3

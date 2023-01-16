@@ -9,23 +9,24 @@
 #'
 #' @examples
 #' \dontrun{file_name <- "test_file.yaml"
-#' a <- load_deme(file=file_name)}
+#' a <- read_deme(file=file_name)}
 #'
 #' yaml_string <- "time_units: generations\ndemes:\n  - name: a\n    epochs:\n    - start_size: 100"
-#' b <- load_deme(text=yaml_string)
-load_deme <- function(file, text){
+#' b <- read_deme(text=yaml_string)
+read_deme <- function(file, text){
   if (missing(file) && !missing(text)) {
     file <- NULL
     inp <- yaml::read_yaml(text = text)
   } else if (!missing(file) && missing(text)) {
     inp <- yaml::read_yaml(file = file)
-    text = NULL
+    text <- NULL
   } else {
     stop("Either filepath or text must be supplied.", call. = FALSE)
   }
 
   deme <- validate_deme(inp)
   deme <- name_deme(deme)
+  deme <- convert_infinity(deme)
 
   return(deme)
 }
