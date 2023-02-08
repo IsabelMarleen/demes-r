@@ -1,4 +1,4 @@
-order_deme <- function(deme){
+order_demes <- function(deme){
   ordered_deme <- list()
 
   ordered_deme$time_units <- deme$time_units
