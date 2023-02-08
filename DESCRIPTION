@@ -1,0 +1,20 @@
+Package: demes
+Type: Package
+Title: R Parser for Demes Population Models
+Version: 0.1.0
+Author: Isabel M. Pötzsch
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: The demes R package provides an API for parsing Demes demographic models.
+    A demographic model describes one or more demes (or populations), how they change over time, and their relationships to one another. `demes` provides a self-contained and unambiguous in-memory description of a demographic model.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    yaml
+Suggests: 
+    reticulate,
+    testthat (>= 3.0.0),
+    withr,
+    fs
+Config/testthat/edition: 3
+RoxygenNote: 7.2.3
