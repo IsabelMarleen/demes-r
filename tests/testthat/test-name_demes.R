@@ -1,5 +1,5 @@
 test_that("demes are named correctly", {
-  d <- yaml::read_yaml(test_path("data", "valid", "minimal_01.yaml"))
+  d <- yaml::read_yaml(fs::path_package("demes", "tools", "demes-spec", "test-cases", "valid", "minimal_01.yaml"))
   d <- validate_demes(d)
   d <- name_demes(d)
 
