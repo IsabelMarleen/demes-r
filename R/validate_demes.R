@@ -1,4 +1,4 @@
-validate_deme <- function(inp){
+validate_demes <- function(inp){
   out <- inp
 
   # Check for time_units and generation_time
@@ -47,8 +47,8 @@ validate_deme <- function(inp){
     comparison_group <- c("end_time", "end_size", "start_size", "size_function", "selfing_rate", "cloning_rate")
 
     for(j in 1:length(inp$demes[[i]]$epochs)){ # iterate through all epochs in deme i
-
-      present_epoch <- c(names(inp$demes[[i]]$epochs[[j]]))
+      curr_epoch <- inp$demes[[i]]$epochs[[j]]
+      present_epoch <- c(names(curr_epoch))
       missing_epoch <- setdiff(comparison_group, present_epoch)
 
       if (is.null(inp$demes[[i]]$epochs)){

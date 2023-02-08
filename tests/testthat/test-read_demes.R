@@ -1,7 +1,7 @@
 
 
 test_that("minimal_01.yaml is loaded correctly", {
-  d <- read_deme(file = test_path("data", "valid", "minimal_01.yaml"))
+  d <- read_demes(file = test_path("data", "valid", "minimal_01.yaml"))
 
   # Test that all the expected list entries are there
   expect_setequal(names(d), c("time_units", "generation_time", "doi", "description", "metadata", "demes", "migrations", "pulses"))
@@ -24,7 +24,7 @@ test_that("minimal_01.yaml is loaded correctly", {
 
 test_that("both input types work", {
   yaml_string <- "time_units: generations\ndemes:\n  - name: a\n    epochs:\n    - start_size: 100"
-  b <- read_deme(text=yaml_string)
-  d <- read_deme(file = test_path("data", "valid", "minimal_01.yaml"))
-  expect_identical(order_deme(b), order_deme(d))
+  b <- read_demes(text=yaml_string)
+  d <- read_demes(file = test_path("data", "valid", "minimal_01.yaml"))
+  expect_identical(order_demes(b), order_demes(d))
 })

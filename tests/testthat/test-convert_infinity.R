@@ -3,18 +3,15 @@ test_that("no 'Infinity' strings remain", {
   setup_env(PYTHON_ENV)
   reticulate::use_condaenv(PYTHON_ENV, required=TRUE)
 
-  test_files <- list.files(testthat::test_path("data", "valid"))
+  #test_files <- list.files(get_test_file_path())
+  test_files <- c("admixture_27.yaml", "admixture_and_split_01.yaml", "basic_resolution_01.yaml", "bottleneck.yaml")
   path_tmp_dir <- withr::local_tempdir()
 
   for (f in test_files){
-    path_ref_implementation <- testthat::test_path("reference_implementation", "resolve_yaml.py")
-    path_preparsed_file <- file.path(path_tmp_dir, gsub('yaml', 'json', f))
+    path_preparsed_file <- parse_ref(input_file = f, path_tmp_dir = path_tmp_dir)
 
-    py_command <- paste("import os; os.system('python", path_ref_implementation, testthat::test_path("data", "valid", f), ">", path_preparsed_file, "')")
-    reticulate::py_run_string(py_command)
-
-    inp <- yaml::read_yaml(test_path(path_preparsed_file))
-    d <- validate_deme(inp)
+    inp <- yaml::read_yaml(path_preparsed_file)
+    d <- validate_demes(inp)
     d <- convert_infinity(d)
     d_vec <- unlist(d)
 
