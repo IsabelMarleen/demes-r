@@ -98,8 +98,13 @@ validate_demes <- function(inp){
       out$demes[[i]]$epochs[[j]] <- out_curr_epoch
     }
 
-    if (is.null(inp$demes[[i]]$proportions)){
-      out$demes[[i]]$proportions <- list()
+    if (is.null(inp$demes[[i]]$proportions) & length(inp$demes[[i]]$ancestors) == 1){
+      out$demes[[i]]$proportions <- as.double(1)
+    } else if(is.null(inp$demes[[i]]$proportions) & length(inp$demes[[i]]$ancestors) > 1){
+      # Throw error?
+      print("no proportions even though several ancestors, that can't be right")
+    }else{
+      out$demes[[i]]$proportions <- as.double(unlist(inp$demes[[i]]$proportions))
     }
 
     if (is.null(inp$demes[[i]]$ancestors)){

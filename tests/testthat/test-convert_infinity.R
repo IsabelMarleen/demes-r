@@ -4,7 +4,7 @@ test_that("no 'Infinity' strings remain", {
   reticulate::use_condaenv(PYTHON_ENV, required=TRUE)
 
   #test_files <- list.files(get_test_file_path())
-  test_files <- c("admixture_27.yaml", "admixture_and_split_01.yaml", "basic_resolution_01.yaml", "bottleneck.yaml")
+  test_files <- paste0("infinity_0", 1:8, ".yaml")
   path_tmp_dir <- withr::local_tempdir()
 
   for (f in test_files){
