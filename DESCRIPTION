@@ -30,9 +30,7 @@ Imports:
     yaml
 Suggests:
     reticulate,
-    testthat (>= 3.0.0),
-    withr,
-    fs
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
 URL: https://github.com/RacimoLab/demes-r
