@@ -59,7 +59,8 @@ validate_demes <- function(inp){
         out_curr_epoch$start_size <- as.double(0)
         out_curr_epoch$end_size <- as.double(0)
         out_curr_epoch$end_time <- as.double(0)
-        out_curr_epoch$size_function <- "exponential"
+        out_curr_epoch$size_function <- string()
+
         out_curr_epoch$selfing_rate <- as.double(0)
         out_curr_epoch$cloning_rate <- as.double(0)
       } else {
@@ -79,7 +80,23 @@ validate_demes <- function(inp){
 
         if(is.null(inp_curr_epoch$size_function)){
           # This is a quick fix, test file args_from_file_01.yaml suggests that the size function is calculated from the size values?
-          out_curr_epoch$size_function <- "constant"
+          # size_function
+          #
+          # A function describing the population size change between start_time and end_time. This may be any string, but the values “constant” and “exponential” are explicitly acknowledged to have the following meanings.
+          #
+          # constant: the deme’s size does not change over the epoch. start_size and end_size must be equal.
+          # exponential: the deme’s size changes exponentially from start_size to end_size over the epoch. If t is a time within the span of the epoch, the deme size N at time t can be calculated as:
+          #   dt = (epoch.start_time - t) / (epoch.start_time - epoch.end_time)
+          # r = log(epoch.end_size / epoch.start_size)
+          # N = epoch.start_size * exp(r * dt)
+          #
+          # size_function must be constant if the epoch has an infinite start_time.
+          if(out_curr_epoch$end_size == out_curr_epoch$start_size){
+            out_curr_epoch$size_function <- "constant"
+          } else{
+            out_curr_epoch$size_function <- "exponential" # xxx quick fix
+          }
+
         }
 
         if(is.null(inp_curr_epoch$selfing_rate)){

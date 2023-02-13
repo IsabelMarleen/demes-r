@@ -1,7 +1,7 @@
 
 
 test_that("minimal_01.yaml is parsed correctly", {
-  inp <- yaml::read_yaml(fs::path(get_test_file_path(), "minimal_01.yaml"))
+  inp <- yaml::read_yaml(get_test_file_path("minimal_01.yaml"))
   d <- validate_demes(inp)
 
   # Test that all the expected list entries are there
@@ -38,9 +38,9 @@ test_that("parser does the same as python reference implementation", {
                                              paste0("deme_names_0", 1:3, ".yaml"),
                                              paste0("migration_0", 1:9, ".yaml"), "migration_10.yaml",
                                              paste0("structure_0", 1:8, ".yaml"),
-                                             #"args_from_file_01.yaml", # fails because of size_function
-                                             "admixture_and_split_01.yaml"#,
-                                             #"asymmetric_migration_01.yaml" # fails because of size_function
+                                             "args_from_file_01.yaml",
+                                             "admixture_and_split_01.yaml",
+                                             "asymmetric_migration_01.yaml"
                                               )]
   path_tmp_dir <- withr::local_tempdir()
 
@@ -57,7 +57,7 @@ test_that("parser does the same as python reference implementation", {
     expect_equal(order_demes(test_deme), more_true_deme, label = paste(f, "preparsed"))
 
     # validating the not pre-processed file should produce the same as the pre-processed file
-    incomp_deme <- yaml::read_yaml(fs::path(get_test_file_path(), f))
+    incomp_deme <- yaml::read_yaml(get_test_file_path(f))
     test2_deme <- validate_demes(incomp_deme)
 
     expect_equal(order_demes(test2_deme), more_true_deme, label = paste(f, "parsed de novo"))

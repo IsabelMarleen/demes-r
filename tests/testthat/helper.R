@@ -18,6 +18,10 @@ parse_ref <- function(input_file, path_tmp_dir){
 }
 
 # Function to return test file location
-get_test_file_path <- function(){
-  return(fs::path_package("demes", "tools", "demes-spec", "test-cases", "valid"))
+get_test_file_path <- function(file=NULL){
+  if (is.null(file)){
+    return(fs::path_package("demes", "tools", "demes-spec", "test-cases", "valid"))
+  } else {
+    return(fs::path_package("demes", "tools", "demes-spec", "test-cases", "valid", file))
+  }
 }
