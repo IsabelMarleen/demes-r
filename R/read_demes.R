@@ -20,13 +20,13 @@
 #' demes2 <- read_demes(text = yaml_string)
 read_demes <- function(file, text){
   if (missing(file) && !missing(text)) {
-    file <- NULL
     inp <- yaml::read_yaml(text = text)
   } else if (!missing(file) && missing(text)) {
+    if (!file.exists(file))
+      stop("A YAML file not found at the given path: ", file, call. = FALSE)
     inp <- yaml::read_yaml(file = file)
-    text <- NULL
   } else {
-    stop("Either filepath or text must be supplied.", call. = FALSE)
+    stop("Either a path to a YAML file or a YAML string must be given as input", call. = FALSE)
   }
 
   demes <- validate_demes(inp)
