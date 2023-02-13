@@ -25,9 +25,9 @@ read_demes <- function(file, text){
     stop("Either filepath or text must be supplied.", call. = FALSE)
   }
 
-  deme <- validate_deme(inp)
-  deme <- name_deme(deme)
-  deme <- convert_infinity(deme)
+  demes <- validate_demes(inp)
+  demes <- name_demes(demes)
+  demes <- convert_infinity(demes)
 
-  return(deme)
+  return(demes)
 }
