@@ -1,20 +1,39 @@
 Package: demes
-Type: Package
-Title: R Parser for Demes Population Models
-Version: 0.1.0
-Author: Isabel M. Pötzsch
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: The demes R package provides an API for parsing Demes demographic models.
-    A demographic model describes one or more demes (or populations), how they change over time, and their relationships to one another. `demes` provides a self-contained and unambiguous in-memory description of a demographic model.
+Title: An R Parser and Validator for Population Genetic Models in the 'Demes' Format
+Version: 0.0.0.9000
+Authors@R:
+    c(person(given = "Isabel M.",
+             family = "Pötzsch",
+             role = c("aut", "cre"),
+             email = "fnj847@alumni.ku.dk"),
+      person(given = "Graham",
+             family = "Gower",
+             role = c("ctb"),
+             comment = c(ORCID = "0000-0002-6197-3872")),
+      person(given = "Martin",
+             family = "Petr",
+             role = c("ctb", "cre"),
+             email = "contact@bodkan.net",
+             comment = c(ORCID = "0000-0003-4879-8421")))
+Description: A parser and validator of population genetic demographic
+    models specified in the 'Demes' format by Gower et al. (2022)
+    <doi:10.1093/genetics/iyac131>. 'Demes' models (encoded as standard
+    'YAML' files) are parsed, validated against the formal specification of
+    the 'Demes' standard, and represented in memory as standard R objects,
+    intended to be easy to inspect by the user and leveraged for simulation
+    of genomic data using downstream software according to their preferences.
+Depends: R (>= 3.6.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
     yaml
-Suggests: 
+Suggests:
     reticulate,
     testthat (>= 3.0.0),
     withr,
     fs
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
+URL: https://github.com/RacimoLab/demes-r
+BugReports: https://github.com/RacimoLab/demes-r/issues
