@@ -34,7 +34,7 @@ winold: README.md
 
 $(pkg): README.md
 	R -e 'devtools::document()'
-	mkdir -p build; cd build; R CMD build --log ../../demes
+	mkdir -p build; cd build; R CMD build --log ../../demes-r
 
 README.md: README.Rmd $(logo)
 	R -e 'devtools::install(upgrade = "never")'
