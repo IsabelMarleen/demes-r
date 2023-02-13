@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' path <- system.file("extdata/yaml", "ex03.yaml", package = "demes")
+#' path <- system.file("extdata/yaml", "minimal_01.yaml", package = "demes")
 #' demes1 <- read_demes(file = path)
 #'
 #' yaml_string <- "time_units: generations\ndemes:\n  - name: a\n    epochs:\n    - start_size: 100"
