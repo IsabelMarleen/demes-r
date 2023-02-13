@@ -2,7 +2,6 @@
 # strings which can appear in a Demes YAML file into proper Inf values
 # (this is more idiomatic because R has a support for infinite numbers built in).
 convert_infinity <- function(inp){
-
   for (i in 1:length(inp$demes)){
     if (inp$demes[[i]]$start_time == "Infinity") {
       inp$demes[[i]]$start_time <- Inf
