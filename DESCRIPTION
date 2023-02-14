@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R:
     c(person(given = "Isabel M.",
              family = "Pötzsch",
-             role = c("aut"),
+             role = c("aut", "cre"),
              email = "fnj847@alumni.ku.dk"),
       person(given = "Graham",
              family = "Gower",
@@ -12,7 +12,7 @@ Authors@R:
              comment = c(ORCID = "0000-0002-6197-3872")),
       person(given = "Martin",
              family = "Petr",
-             role = c("ctb", "cre"),
+             role = c("ctb"),
              email = "contact@bodkan.net",
              comment = c(ORCID = "0000-0003-4879-8421")))
 Description: A parser and validator of population genetic demographic
