@@ -2,26 +2,32 @@
 % Please edit documentation in R/read_demes.R
 \name{read_demes}
 \alias{read_demes}
-\title{Load and Validate a Demes Model}
+\title{Load and validate a Demes model}
 \usage{
 read_demes(file, text)
 }
 \arguments{
-\item{file}{either a character string naming a file or a connection open for writing}
+\item{file}{Either a path to a YAML file or a \link[base]{connection}}
 
-\item{text}{character string: if file is not supplied and this is, then data are read from the value of text via a text connection. Notice that a literal string can be used to include (small) data sets within R code.}
+\item{text}{If a \code{file} is not provided, Demes YAML input is
+read as a literal string given in the \code{text}}
 }
 \value{
-A fully specified Demes model, a nested list. See the Demes specifications for more details https://github.com/popsim-consortium/demes-spec/.
+A fully instantiated Demes model as a nested R list
 }
 \description{
-\code{read_demes} reads a Demes model yaml file or string, validates the input and creates a fully specified R object from it
+This function reads a Demes model from a YAML file or a literal YAML string,
+validates the model, and returns it as a fully instantiated R object.
+}
+\details{
+See the Demes specification document for more details about the Demes format
+<https://github.com/popsim-consortium/demes-spec/>. Many example YAML Demes
+files can be found at <https://github.com/popsim-consortium/demes-spec/tree/main/test-cases/valid>.
 }
 \examples{
-\dontrun{
-file_name <- "test_file.yaml"
-a <- read_demes(file=file_name)}
+path <- system.file("extdata/yaml", "minimal_01.yaml", package = "demes")
+demes1 <- read_demes(file = path)
 
 yaml_string <- "time_units: generations\ndemes:\n  - name: a\n    epochs:\n    - start_size: 100"
-b <- read_demes(text=yaml_string)
+demes2 <- read_demes(text = yaml_string)
 }

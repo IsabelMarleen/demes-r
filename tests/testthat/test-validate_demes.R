@@ -1,7 +1,5 @@
-
-
 test_that("minimal_01.yaml is parsed correctly", {
-  inp <- yaml::read_yaml(fs::path(get_test_file_path(), "minimal_01.yaml"))
+  inp <- yaml::read_yaml(get_test_file("minimal_01.yaml"))
   d <- validate_demes(inp)
 
   # Test that all the expected list entries are there
@@ -16,44 +14,61 @@ test_that("minimal_01.yaml is parsed correctly", {
   expect_identical(d$doi, list())
   named_list <- list()
   names(named_list) <- character()
-  expect_identical(d$metadata, named_list)
-  expect_identical(d$demes[[1]]$ancestors, list())
+  expect_equal(d$metadata, named_list)
+  expect_equal(d$demes[[1]]$ancestors, list())
   expect_identical(d$demes[[1]]$description, '')
-  expect_identical(d$demes[[1]]$proportions, list())
+  expect_equal(d$demes[[1]]$proportions, vector(mode="integer"))
   expect_identical(d$migrations, list())
   expect_identical(d$pulses, list())
 })
 
+test_that("R parser results match the reference implementation in Python", {
+  setup_env()
+  setup_demes_spec()
 
+  # test_files <- list.files(get_test_file_path())
+  # test_files <- test_files[test_files == "minimal_01.yaml"]
 
-test_that("parser does the same as python reference implementation", {
+  # get all valid test YAML files available in the Demes specification repository
+  # test_files <- file.path(get_spec_dir(), "test-cases", "valid") %>% list.files(pattern = ".yaml")
+  test_files <- c(paste0("minimal_0", 1:2, ".yaml"),
+                                            paste0("admixture_0", 1:9, ".yaml"), paste0("admixture_", 10:27, ".yaml"),
+                                            paste0("deme_names_0", 1:3, ".yaml"),
+                                            paste0("migration_0", 1:9, ".yaml"), "migration_10.yaml",
+                                            paste0("structure_0", 1:8, ".yaml"),
+                                            "args_from_file_01.yaml",
+                                            "admixture_and_split_01.yaml",
+                                            "asymmetric_migration_01.yaml",
+                                            "bad_pulse_time_01.yaml",
+                                            paste0("deme_cloning_rate_0", 1:3, ".yaml"),
+                                            "deme_selfing_rate_01.yaml",
+                                            "size_function_defaults_01.yaml",
+                                            paste0("split_0", 1:9, ".yaml"), "split_10.yaml",
+                                            "selfing_cloning_01.yaml",
+                                            paste0("size_changes_0", 1:9, ".yaml"), paste0("size_changes_", 10:32, ".yaml")
+                                            )
 
-  PYTHON_ENV <- "demes-r"
-  setup_env(PYTHON_ENV)
-  reticulate::use_condaenv(PYTHON_ENV, required=TRUE)
-
-  test_files <- list.files(get_test_file_path())
-  test_files <- test_files[test_files == "minimal_01.yaml"]
-  path_tmp_dir <- withr::local_tempdir()
 
   for (f in test_files){
-    path_preparsed_file <- parse_ref(input_file = f, path_tmp_dir = path_tmp_dir)
-    print(path_preparsed_file)
+    path_preparsed_file <- parse_ref(get_test_file(f))
+    # print(path_preparsed_file)
 
     # validating a fully parsed model should not change anything
-    # Use less strict expectation (as opposed to use_identical), because values should be encoded as doubles,
-    # but read_yaml reads 0 values as integers
-    true_deme <- yaml::read_yaml(path_preparsed_file)
-    more_true_deme <- convert_infinity(true_deme)
-    test_deme <- convert_infinity(validate_demes(true_deme))
+    # Use less strict expectation (as opposed to use_identical), because values should
+    # be encoded as doubles, but read_yaml reads 0 values as integers
+    true_demes <- yaml::read_yaml(path_preparsed_file)
+    more_true_demes <- post_process_expected(true_demes)
+    test_demes <- convert_infinity(validate_demes(true_demes))
 
-    expect_equal(order_demes(test_deme), order_demes(more_true_deme), label = paste(f, "preparsed"))
+    expect_equal(order_demes(test_demes),
+                 more_true_demes, label = paste(f, "preparsed"))
 
     # validating the not pre-processed file should produce the same as the pre-processed file
-    incomp_deme <- yaml::read_yaml(fs::path(get_test_file_path(), f))
-    test2_deme <- validate_demes(incomp_deme)
+    incomp_demes <- yaml::read_yaml(get_test_file(f))
+    test2_demes <- validate_demes(incomp_demes)
 
-    expect_equal(order_demes(test2_deme), order_demes(more_true_deme), label = paste(f, "parsed de novo"))
+    expect_equal(order_demes(test2_demes),
+                 more_true_demes, label = paste(f, "parsed de novo"))
   }
 
   # This test has a couple of work-arounds that should be improved:

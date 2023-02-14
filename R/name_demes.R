@@ -1,17 +1,5 @@
-
-#' Convert demes into a named list
-#'
-#' @param demes
-#'
-#' @return \code{named deme}
-#' @noRd
-#' @examples
-#' a <- yaml::read_yaml(text="time_units: generations
-#' demes:
-#'   - name: A
-#' epochs:
-#'   - start_size: 1000")
-#' a <- demes::name_demes(a)
+# Take a validated nested list Demes structure, name each element of the list
+# after each deme and return the modified structure back in the named form
 name_demes <- function(demes){
   deme_names <- c()
   for (i in 1:length(demes$demes)){
