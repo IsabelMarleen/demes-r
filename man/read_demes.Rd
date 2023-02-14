@@ -7,7 +7,7 @@
 read_demes(file, text)
 }
 \arguments{
-\item{file}{Either a path to a YAML file or a connection open for writing}
+\item{file}{Either a path to a YAML file or a \link[base]{connection}}
 
 \item{text}{If a \code{file} is not provided, Demes YAML input is
 read as a literal string given in the \code{text}}
@@ -21,7 +21,8 @@ validates the model, and returns it as a fully instantiated R object.
 }
 \details{
 See the Demes specification document for more details about the Demes format
-<https://github.com/popsim-consortium/demes-spec/>.
+<https://github.com/popsim-consortium/demes-spec/>. Many example YAML Demes
+files can be found at <https://github.com/popsim-consortium/demes-spec/tree/main/test-cases/valid>.
 }
 \examples{
 path <- system.file("extdata/yaml", "minimal_01.yaml", package = "demes")
