@@ -17,6 +17,7 @@ setup_env <- function(PYTHON_ENV = "demes-r"){
 # Return a (re-usable within a single R session) directory with downloaded
 # Demes specification repository (scripts and test files)
 get_spec_dir <- function() {
+  # note: can be changed to a fixed location for easier development work
   file.path(tempdir(), "demes-spec-bc0aee7c596fe1c2eac9e7ba3c66a382108e34a6")
 }
 
