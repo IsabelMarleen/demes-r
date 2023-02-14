@@ -1,4 +1,5 @@
 test_that("minimal_01.yaml is parsed correctly", {
+  setup_demes_spec()
   inp <- yaml::read_yaml(get_test_file("minimal_01.yaml"))
   d <- validate_demes(inp)
 
@@ -32,21 +33,21 @@ test_that("R parser results match the reference implementation in Python", {
   # get all valid test YAML files available in the Demes specification repository
   # test_files <- file.path(get_spec_dir(), "test-cases", "valid") %>% list.files(pattern = ".yaml")
   test_files <- c(paste0("minimal_0", 1:2, ".yaml"),
-                                            paste0("admixture_0", 1:9, ".yaml"), paste0("admixture_", 10:27, ".yaml"),
-                                            paste0("deme_names_0", 1:3, ".yaml"),
-                                            paste0("migration_0", 1:9, ".yaml"), "migration_10.yaml",
-                                            paste0("structure_0", 1:8, ".yaml"),
-                                            "args_from_file_01.yaml",
-                                            "admixture_and_split_01.yaml",
-                                            "asymmetric_migration_01.yaml",
-                                            "bad_pulse_time_01.yaml",
-                                            paste0("deme_cloning_rate_0", 1:3, ".yaml"),
-                                            "deme_selfing_rate_01.yaml",
-                                            "size_function_defaults_01.yaml",
-                                            paste0("split_0", 1:9, ".yaml"), "split_10.yaml",
-                                            "selfing_cloning_01.yaml",
-                                            paste0("size_changes_0", 1:9, ".yaml"), paste0("size_changes_", 10:32, ".yaml")
-                                            )
+                  paste0("admixture_0", 1:9, ".yaml"), paste0("admixture_", 10:27, ".yaml"),
+                  paste0("deme_names_0", 1:3, ".yaml"),
+                  paste0("migration_0", 1:9, ".yaml"), "migration_10.yaml",
+                  paste0("structure_0", 1:8, ".yaml"),
+                  "args_from_file_01.yaml",
+                  "admixture_and_split_01.yaml",
+                  "asymmetric_migration_01.yaml",
+                  "bad_pulse_time_01.yaml",
+                  paste0("deme_cloning_rate_0", 1:3, ".yaml"),
+                  "deme_selfing_rate_01.yaml",
+                  "size_function_defaults_01.yaml",
+                  paste0("split_0", 1:9, ".yaml"), "split_10.yaml",
+                  "selfing_cloning_01.yaml",
+                  paste0("size_changes_0", 1:9, ".yaml"), paste0("size_changes_", 10:32, ".yaml")
+                  )
 
 
   for (f in test_files){

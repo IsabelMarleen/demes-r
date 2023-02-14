@@ -16,15 +16,17 @@ order_demes <- function(deme) {
     ordered_deme$demes[[i]]$start_time <- deme$demes[[i]]$start_time
 
     ordered_deme$demes[[i]]$epochs <- list()
-    for (j in 1:length(deme$demes[[i]]$epochs)){
-      ordered_deme$demes[[i]]$epochs[j][[1]] <- list()
+    if (length(deme$demes[[i]]$epochs) > 0){
+      for (j in 1:length(deme$demes[[i]]$epochs)){
+        ordered_deme$demes[[i]]$epochs[j][[1]] <- list()
 
-      ordered_deme$demes[[i]]$epochs[[j]]$end_time <- deme$demes[[i]]$epochs[[j]]$end_time
-      ordered_deme$demes[[i]]$epochs[[j]]$start_size <- deme$demes[[i]]$epochs[[j]]$start_size
-      ordered_deme$demes[[i]]$epochs[[j]]$end_size <- deme$demes[[i]]$epochs[[j]]$end_size
-      ordered_deme$demes[[i]]$epochs[[j]]$size_function <- deme$demes[[i]]$epochs[[j]]$size_function
-      ordered_deme$demes[[i]]$epochs[[j]]$selfing_rate <- deme$demes[[i]]$epochs[[j]]$selfing_rate
-      ordered_deme$demes[[i]]$epochs[[j]]$cloning_rate <- deme$demes[[i]]$epochs[[j]]$cloning_rate
+        ordered_deme$demes[[i]]$epochs[[j]]$end_time <- deme$demes[[i]]$epochs[[j]]$end_time
+        ordered_deme$demes[[i]]$epochs[[j]]$start_size <- deme$demes[[i]]$epochs[[j]]$start_size
+        ordered_deme$demes[[i]]$epochs[[j]]$end_size <- deme$demes[[i]]$epochs[[j]]$end_size
+        ordered_deme$demes[[i]]$epochs[[j]]$size_function <- deme$demes[[i]]$epochs[[j]]$size_function
+        ordered_deme$demes[[i]]$epochs[[j]]$selfing_rate <- deme$demes[[i]]$epochs[[j]]$selfing_rate
+        ordered_deme$demes[[i]]$epochs[[j]]$cloning_rate <- deme$demes[[i]]$epochs[[j]]$cloning_rate
+      }
     }
     ordered_deme$demes[[i]]$proportions <- deme$demes[[i]]$proportions
     ordered_deme$demes[[i]]$ancestors <- deme$demes[[i]]$ancestors
