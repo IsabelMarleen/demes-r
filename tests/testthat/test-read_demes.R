@@ -5,8 +5,8 @@ test_that("minimal_01.yaml is loaded correctly", {
 
   # Test that all the expected list entries are present in the loaded
   # nested-list R structure
-  expect_setequal(names(d), c("time_units", "generation_time", "doi", "description",
-                              "metadata", "demes", "migrations", "pulses"))
+  expect_setequal(names(d), c("time_units", "generation_time", "description", "demes",
+                              "doi", "metadata", "migrations", "pulses"))
 
   # Test that all the list entries have the expected entries
   expect_identical(d$time_units, "generations")
@@ -14,15 +14,13 @@ test_that("minimal_01.yaml is loaded correctly", {
   expect_identical(d$demes[[1]]$name, "a")
 
   # Test that all the empty values have the right type and are empty
+  named_list <- list()
+  names(named_list) <- character()
   expect_identical(d$doi, list())
-
-  empty_metadata <- list()
-  names(empty_metadata) <- character()
-  expect_identical(d$metadata, empty_metadata)
-
-  expect_identical(d$demes[[1]]$ancestors, list())
+  expect_equal(d$metadata, named_list)
+  expect_equal(d$demes[[1]]$ancestors, list())
   expect_identical(d$demes[[1]]$description, '')
-  expect_identical(d$demes[[1]]$proportions, list())
+  expect_equal(d$demes[[1]]$proportions, vector(mode="integer"))
   expect_identical(d$migrations, list())
   expect_identical(d$pulses, list())
 })
