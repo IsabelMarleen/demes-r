@@ -40,7 +40,14 @@ test_that("parser does the same as python reference implementation", {
                                              paste0("structure_0", 1:8, ".yaml"),
                                              "args_from_file_01.yaml",
                                              "admixture_and_split_01.yaml",
-                                             "asymmetric_migration_01.yaml"
+                                             "asymmetric_migration_01.yaml",
+                                             "bad_pulse_time_01.yaml",
+                                             paste0("deme_cloning_rate_0", 1:3, ".yaml"),
+                                             "deme_selfing_rate_01.yaml",
+                                             "size_function_defaults_01.yaml",
+                                             paste0("split_0", 1:9, ".yaml"), "split_10.yaml",
+                                             "selfing_cloning_01.yaml",
+                                             paste0("size_changes_0", 1:9, ".yaml"), paste0("size_changes_", 10:32, ".yaml")
                                               )]
   path_tmp_dir <- withr::local_tempdir()
 

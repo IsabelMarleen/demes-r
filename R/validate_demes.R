@@ -59,7 +59,7 @@ validate_demes <- function(inp){
         out_curr_epoch$start_size <- as.double(0)
         out_curr_epoch$end_size <- as.double(0)
         out_curr_epoch$end_time <- as.double(0)
-        out_curr_epoch$size_function <- string()
+        out_curr_epoch$size_function <- "constant"
 
         out_curr_epoch$selfing_rate <- as.double(0)
         out_curr_epoch$cloning_rate <- as.double(0)
