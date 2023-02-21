@@ -36,11 +36,11 @@ test_that("R parser results match the reference implementation in Python", {
                   paste0("admixture_0", 1:9, ".yaml"), paste0("admixture_", 10:27, ".yaml"),
                   paste0("deme_names_0", 1:3, ".yaml"),
                   paste0("migration_0", 1:9, ".yaml"), "migration_10.yaml",
-                  paste0("structure_0", 1:8, ".yaml"),
+                  paste0("structure_0", 1:8, ".yaml") ,
                   "args_from_file_01.yaml",
                   "admixture_and_split_01.yaml",
                   "asymmetric_migration_01.yaml",
-                  "bad_pulse_time_01.yaml",
+                  "bad_pulse_time_01.yaml", # fails because defaults are not yet implemented
                   paste0("deme_cloning_rate_0", 1:3, ".yaml"),
                   "deme_selfing_rate_01.yaml",
                   "size_function_defaults_01.yaml",

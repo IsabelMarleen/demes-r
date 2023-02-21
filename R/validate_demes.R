@@ -44,45 +44,75 @@ validate_demes <- function(inp){
       out$demes[[i]]$start_time <- as.double(inp$demes[[i]]$start_time)
     }
 
-    comparison_group <- c("end_time", "end_size", "start_size", "size_function", "selfing_rate", "cloning_rate")
+    if (length(inp$demes[[i]]$epochs) == 0){
+      inp$demes[[i]]$epochs <- list()
+      out$demes[[i]]$epochs <- list()
+    }
 
     if (length(inp$demes[[i]]$epochs) > 0){
-      for(j in 1:length(inp$demes[[i]]$epochs)){ # iterate through all epochs in deme i
-        inp_curr_epoch <- inp$demes[[i]]$epochs[[j]]
-        out_curr_epoch <- out$demes[[i]]$epochs[[j]]
+      num_epochs <- 1:length(inp$demes[[i]]$epochs)
+    } else {
+      num_epochs <- 1
+    }
+    for(j in num_epochs){ # iterate through all epochs in deme i
+      if (length(inp$demes[[i]]$epochs[j][[1]]) == 0){
+        inp$demes[[i]]$epochs[j][[1]] <- list()
+        out$demes[[i]]$epochs[j][[1]] <- list()
+      }
+      inp_curr_epoch <- inp$demes[[i]]$epochs[[j]]
+      out_curr_epoch <- out$demes[[i]]$epochs[[j]]
 
-        present_epoch <- c(names(inp_curr_epoch))
-        missing_epoch <- setdiff(comparison_group, present_epoch)
+      if (is.null(out_curr_epoch)){
+        out_curr_epoch <- list()
+      }
 
-        if (is.null(inp$demes[[i]]$epochs)){
-          # should probably throw an error, there should be at least one epoch per deme, right?
-          out_curr_epoch <- list()
-          out_curr_epoch$start_size <- as.double(0)
-          out_curr_epoch$end_size <- as.double(0)
-          out_curr_epoch$end_time <- as.double(0)
-          out_curr_epoch$size_function <- "constant"
+      # if(is.null(inp_curr_epoch$start_size) & !is.null(inp_curr_epoch$end_size)){
+      #   out_curr_epoch$start_size <- as.double(inp_curr_epoch$end_size)
+      # } else if(!is.null(inp_curr_epoch$start_size) & is.null(inp_curr_epoch$end_size)){
+      #   out_curr_epoch$end_size <- as.double(inp_curr_epoch$start_size)
+      # } else if(!is.null(inp_curr_epoch$start_size) & !is.null(inp_curr_epoch$end_size)){
+      #   out_curr_epoch$end_size <- as.double(inp_curr_epoch$end_size)
+      #   out_curr_epoch$start_size <- as.double(inp_curr_epoch$start_size)
+      # } else{
+      #   out_curr_epoch$end_size <- as.double(0)
+      #   out_curr_epoch$start_size <- as.double(0)
+      # }
 
-          out_curr_epoch$selfing_rate <- as.double(0)
-          out_curr_epoch$cloning_rate <- as.double(0)
+      if (is.null(out_curr_epoch$start_size)){
+        if (!is.null(inp$defaults$epoch$start_size)){
+          out_curr_epoch$start_size <- inp$defaults$epoch$start_size
+        } else if(!is.null(inp_curr_epoch$end_size))  {
+          out_curr_epoch$start_size <- as.double(inp_curr_epoch$end_size)
         } else {
+          out_curr_epoch$start_size <- as.double(0)
+        }
+      }
 
-          if (is.null(inp_curr_epoch$end_time)){
-            out_curr_epoch$end_time <- as.double(0)
-          }
 
-          if(is.null(inp_curr_epoch$start_size) & !is.null(inp_curr_epoch$end_size)){
-            out_curr_epoch$start_size <- as.double(inp_curr_epoch$end_size)
-          } else if(!is.null(inp_curr_epoch$start_size) & is.null(inp_curr_epoch$end_size)){
-            out_curr_epoch$end_size <- as.double(inp_curr_epoch$start_size)
-          } else if(!is.null(inp_curr_epoch$start_size) & !is.null(inp_curr_epoch$end_size)){
-            out_curr_epoch$end_size <- as.double(inp_curr_epoch$end_size)
-            out_curr_epoch$start_size <- as.double(inp_curr_epoch$start_size)
-          } else{
-            out_curr_epoch$end_size <- as.double(0)
-            out_curr_epoch$start_size <- as.double(0)
-          }
+      if (is.null(out_curr_epoch$end_size)){
+        if (!is.null(inp$defaults$epoch$end_size)){
+          out_curr_epoch$end_size <- inp$defaults$epoch$end_size
+        } else if(!is.null(out_curr_epoch$start_size))  {
+          out_curr_epoch$end_size <- as.double(out_curr_epoch$start_size)
+        } else {
+          out_curr_epoch$end_size <- as.double(0)
+        }
+      }
 
-          if(is.null(inp_curr_epoch$size_function)){
+
+      if (is.null(out_curr_epoch$end_time)){
+        if (!is.null(inp$defaults$epoch$end_time)){
+          out_curr_epoch$end_time <- inp$defaults$epoch$end_time
+        } else {
+          out_curr_epoch$end_time <- as.double(0)
+        }
+      }
+
+
+      if (is.null(out_curr_epoch$size_function)){
+        if (!is.null(inp$defaults$epoch$size_function)){
+          out_curr_epoch$size_function <- inp$defaults$epoch$size_function
+        } else {
             # size_function
             #
             # A function describing the population size change between start_time and end_time. This may be any string, but the values “constant” and “exponential” are explicitly acknowledged to have the following meanings.
@@ -99,25 +129,28 @@ validate_demes <- function(inp){
             } else{
               out_curr_epoch$size_function <- "exponential" # xxx quick fix
             }
-
           }
+        }
 
-          if(is.null(inp_curr_epoch$selfing_rate)){
+        if (is.null(out_curr_epoch$selfing_rate)){
+          if (!is.null(inp$defaults$epoch$selfing_rate)){
+            out_curr_epoch$selfing_rate <- inp$defaults$epoch$selfing_rate
+          } else {
             out_curr_epoch$selfing_rate <- as.double(0)
-          } else {
-            out_curr_epoch$selfing_rate <- as.double(inp_curr_epoch$selfing_rate)
           }
+        }
 
-          if(is.null(inp_curr_epoch$cloning_rate)){
-            out_curr_epoch$cloning_rate <- as.double(0)
+        if (is.null(out_curr_epoch$cloning_rate)){
+          if (!is.null(inp$defaults$epoch$cloning_rate)){
+            out_curr_epoch$cloning_rate <- inp$defaults$epoch$cloning_rate
           } else {
-            out_curr_epoch$cloning_rate <- as.double(inp_curr_epoch$cloning_rate)
+            out_curr_epoch$cloning_rate <- as.double(0)
           }
         }
 
         out$demes[[i]]$epochs[[j]] <- out_curr_epoch
       }
-    }
+
 
     if (is.null(inp$demes[[i]]$proportions) & length(inp$demes[[i]]$ancestors) == 1){
       out$demes[[i]]$proportions <- as.double(1)
@@ -130,10 +163,10 @@ validate_demes <- function(inp){
 
     if (is.null(inp$demes[[i]]$ancestors)){
       out$demes[[i]]$ancestors <- list()
+    } else {
+      out$demes[[i]]$ancestors <- inp$demes[[i]]$ancestors
     }
-
   }
-
 
   if (length(inp$migrations) == 0){
     out$migrations <- list()
