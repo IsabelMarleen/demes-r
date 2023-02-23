@@ -3,7 +3,7 @@
 name_demes <- function(demes){
   deme_names <- c()
   for (i in 1:length(demes$demes)){
-    deme_names[i] <- demes$demes[[1]]$name
+    deme_names[i] <- demes$demes[[i]]$name
   }
   names(demes$demes) <- deme_names
   return(demes)
