@@ -1,5 +1,7 @@
 validate_demes <- function(inp){
   out <- inp
+  named_inp <- name_demes(inp)
+  deme_names <- names(named_inp$demes)
 
   # Check for time_units and generation_time
   if (is.null(inp$time_units)){
@@ -10,7 +12,7 @@ validate_demes <- function(inp){
     out$generation_time <- as.double(1)
   } else if(out$time_units == "generations" & out$generation_time != 1) {
     stop("When time_units is 'generations', generation_time must be equal to 1 and can be omitted.", .call = FALSE)
-  } else {
+  } else if (is.null(inp$generation_time)) {
     stop("generation_time must be specified, unless time_units is 'generations'.", .call = FALSE)
   }
 
@@ -29,13 +31,13 @@ validate_demes <- function(inp){
   }
 
   # Attempting to validate top-level defaults insofar as possible
-  if (inp$defaults$epoch$start_size < 0){
+  if (!all(inp$defaults$epoch$start_size >= 0 & !is.null(inp$defaults$epoch$start_size))){
     stop("Epoch start_size cannot be negative, but a negative top-level default value was specified.", .call=FALSE)
   }
 
   # Demes validation
   # Attempting to validate deme-level defaults insofar as possible
-  if (inp$demes$defaults$epoch$start_size < 0){
+  if (!all(inp$demes$defaults$epoch$start_size >= 0 & !is.null(inp$demes$defaults$epoch$start_size))){
     stop("Epoch start_size cannot be negative, but a negative deme-level default value was specified.", .call=FALSE)
   }
 
@@ -55,24 +57,27 @@ validate_demes <- function(inp){
     # Ancestors
     if (is.null(inp$demes[[i]]$ancestors) & !is.null(inp$defaults$deme$ancestors)){
       out$demes[[i]]$ancestors <- inp$defaults$deme$ancestors
-    } else {
+    } else if (is.null(inp$demes[[i]]$ancestors)) {
       out$demes[[i]]$ancestors <- list()
     }
 
     # Proportions
-    if (is.null(inp$demes[[i]]$proportions) & !is.null(inp$defaults$deme$proportions)){
-      out$demes[[i]]$proportions <- inp$defaults$deme$proportions
-    } else if (is.null(inp$demes[[i]]$proportions)){
-      if (length(inp$demes[[i]]$ancestors) == 1){
-        out$demes[[i]]$proportions <- list(as.double(1))
-      } else if(length(inp$demes[[i]]$ancestors) == 0){
-        out$demes[[i]]$proportions <- list()
-      } else{
-        stop("proportions cannot be determined with the information provided. proportions must either be specified explicitly, via defaults or have one or less ancestors.", .call=FALSE)
+    if (!is.null(inp$demes[[i]]$proportions)){
+      if(length(out$demes[[i]]$proportions) > 0){
+        out$demes[[i]]$proportions <- list(as.double(inp$demes[[i]]$proportions))
       }
+    } else if (!is.null(inp$defaults$deme$proportions)){
+      out$demes[[i]]$proportions <- list(as.double(inp$defaults$deme$proportions))
+    } else if (length(inp$demes[[i]]$ancestors) == 1){
+      out$demes[[i]]$proportions <- list(as.double(1))
+    } else if(length(inp$demes[[i]]$ancestors) == 0){
+        out$demes[[i]]$proportions <- list()
     } else{
-      out$demes[[i]]$proportions <- as.double(inp$demes[[i]]$proportions)
+        stop("proportions cannot be determined with the information provided. proportions must either be specified explicitly, via defaults or have one or less ancestors.", .call=FALSE)
     }
+    #} #else if (is.null(inp$demes[[i]]$proportions)){
+    #   out$demes[[i]]$proportions <- list(as.double(inp$demes[[i]]$proportions))
+    # }
 
     # Start time
     if (is.null(inp$demes[[i]]$start_time)){
@@ -82,15 +87,13 @@ validate_demes <- function(inp){
         out$demes[[i]]$start_time <-  inp$defaults$demes$start_time
       } else if (!is.null(inp$defaults$epoch$start_time)){
         out$demes[[i]]$start_time <-  inp$defaults$epoch$start_time
-      } else if (length(out$demes[[i]]$ancestors) == 1 & out$demes[[out$demes[[i]]$ancestors[[1]]]]$end_time > 0){
-        out$demes[[i]]$start_time <- out$demes[[out$demes[[i]]$ancestors[[1]]]]$end_time
       } else if (length(out$demes[[i]]$ancestors) == 0){
         out$demes[[i]]$start_time <- Inf
+      } else if (length(out$demes[[i]]$ancestors) == 1 & get_ancestors_endtime(out, i, deme_names) > 0){
+        out$demes[[i]]$start_time <- get_ancestors_endtime(out, i, deme_names)
       } else {
         stop(paste("start_time of deme", i, "cannot be determined from the provided information."), .call=FALSE)
       }
-    } else {
-      out$demes[[i]]$start_time <- as.double(inp$demes[[i]]$start_time)
     }
 
     # Epochs
@@ -120,7 +123,7 @@ validate_demes <- function(inp){
       # Epoch start time
       if (j == 1){
         out_curr_epoch$start_time <- out$demes[[i]]$start_time
-      } else {
+      } else if (j > 1) {
         out_curr_epoch$start_time <- out$demes[[i]]$epochs[[j-1]]$end_time
       }
 
@@ -137,8 +140,10 @@ validate_demes <- function(inp){
         }
       } else if (out_curr_epoch$end_time >= out$demes[[i]]$start_time){
         stop(paste("The end_time of epoch", j, "is larger or equal to the start_time of deme", i, "but needs to be strictly smaller."), .call=FALSE)
-      } else if (j > 1 & out_curr_epoch$end_time >= out$demes[[i]]$epochs[[j-1]]$end_time){
-        stop(paste("The end_time values of successive epochs must be strictly decreasing, but in deme", i, "epoch", j, "is larger or equal to the end_time of epoch", j-1, "."), .call=FALSE)
+      } else if (j > 1){
+        if (out_curr_epoch$end_time >= out$demes[[i]]$epochs[[j-1]]$end_time){
+          stop(paste("The end_time values of successive epochs must be strictly decreasing, but in deme", i, "epoch", j, "is larger or equal to the end_time of epoch", j-1, "."), .call=FALSE)
+        }
       }
 
       # Epoch start size and end size
@@ -235,7 +240,7 @@ validate_demes <- function(inp){
     for (i in 1:length(start_num_migr)){
       # Rate
       if (is.null(out$migrations[[i]]$rate) & !is.null(inp$defaults$migrations$rate)){
-        out$migrations[[i]]$rate <- inp$defaults$migrations$rate
+        out$migrations[[i]]$rate <- as.double(inp$defaults$migrations$rate)
       } else if (is.null(out$migrations[[i]]$rate)){
         stop(paste0("If a migration is specified, a migration rate must be specified, possibly via default values. This is violated in migration", i, "."), .call=FALSE)
       } else {
@@ -286,6 +291,7 @@ validate_demes <- function(inp){
 
         # Saving symmetric migration at pos i and resetting migration at pos i
         sym_migration <- out$migrations[[i]]
+        sym_migration$rate <- as.double(sym_migration$rate)
         out$migrations[[i]] <- NULL
         sym_combs <- combn(out$migrations[[i]]$demes, 2) # Getting all combinations
 
@@ -298,9 +304,9 @@ validate_demes <- function(inp){
             out$migrations[[i]]$start_time <- sym_migration$start_time
             out$migrations[[i]]$end_time <- sym_migration$end_time
             # start_time
-            out$migrations[[i]]$start_time <- validate_migration_times(out, i, time="start")
+            out$migrations[[i]]$start_time <- validate_migration_times(out, i, time="start", deme_names)
             # end_time
-            out$migrations[[i]]$end_time <- validate_migration_times(out, i, time="end")
+            out$migrations[[i]]$end_time <- validate_migration_times(out, i, time="end", deme_names)
 
             # Second asymmetric migration of pair
             pos_counter <- length(out$migrations)+1
@@ -310,9 +316,9 @@ validate_demes <- function(inp){
             out$migrations[[pos_counter]]$start_time <- sym_migration$start_time
             out$migrations[[pos_counter]]$end_time <- sym_migration$end_time
             # start_time
-            out$migrations[[i]]$start_time <- validate_migration_times(out, pos_counter, time="start")
+            out$migrations[[i]]$start_time <- validate_migration_times(out, pos_counter, time="start", deme_names)
             # end_time
-            out$migrations[[i]]$end_time <- validate_migration_times(out, pos_counter, time="end")
+            out$migrations[[i]]$end_time <- validate_migration_times(out, pos_counter, time="end", deme_names)
 
           } else {
             pos_counter <- pos_counter + 1
@@ -323,9 +329,9 @@ validate_demes <- function(inp){
             out$migrations[[pos_counter]]$start_time <- sym_migration$start_time
             out$migrations[[pos_counter]]$end_time <- sym_migration$end_time
             # start_time
-            out$migrations[[i]]$start_time <- validate_migration_times(out, pos_counter, time="start")
+            out$migrations[[i]]$start_time <- validate_migration_times(out, pos_counter, time="start", deme_names)
             # end_time
-            out$migrations[[i]]$end_time <- validate_migration_times(out, pos_counter, time="end")
+            out$migrations[[i]]$end_time <- validate_migration_times(out, pos_counter, time="end", deme_names)
 
             pos_counter <- pos_counter + 1
             # Second asymmetric migration of pair
@@ -335,16 +341,16 @@ validate_demes <- function(inp){
             out$migrations[[pos_counter]]$start_time <- sym_migration$start_time
             out$migrations[[pos_counter]]$end_time <- sym_migration$end_time
             # start_time
-            out$migrations[[i]]$start_time <- validate_migration_times(out, pos_counter, time="start")
+            out$migrations[[i]]$start_time <- validate_migration_times(out, pos_counter, time="start", deme_names)
             # end_time
-            out$migrations[[i]]$end_time <- validate_migration_times(out, pos_counter, time="end")
+            out$migrations[[i]]$end_time <- validate_migration_times(out, pos_counter, time="end", deme_names)
           }
         }
       } else { # asymmetric migrations
         # start_time
-        out$migrations[[i]]$start_time <- validate_migration_times(out, i, time="start")
+        out$migrations[[i]]$start_time <- validate_migration_times(out, i, time="start", deme_names)
         # end_time
-        out$migrations[[i]]$end_time <- validate_migration_times(out, i, time="end")
+        out$migrations[[i]]$end_time <- validate_migration_times(out, i, time="end", deme_names)
       }
     }
   }
@@ -358,28 +364,44 @@ validate_demes <- function(inp){
 
 
 
-validate_migration_times <- function(out, i, time){
+validate_migration_times <- function(out, i, time, deme_names){
   if (time == "start"){
     if (!is.null(out$migrations[[i]]$start_time)){
       start_time <- as.double(out$migrations[[i]]$start_time)
     } else if (!is.null(out$defaults$migration$start_time)) {
       start_time <- as.double(out$defaults$migration$start_time)
     } else {
+      source_index <- match(out$migrations[[i]]$source, deme_names)
+      dest_index <- match(out$migrations[[i]]$dest, deme_names)
       start_time <- as.double(
-        min(out$demes$demes[[out$migrations[[i]]$source]]$start_time,
-            out$demes$demes[[out$migrations[[i]]$dest]]$start_time))
+        min(out$demes[[source_index]]$start_time,
+            out$demes[[dest_index]]$start_time))
     }
     return(start_time)
+
   } else if (time == "end"){
     if (!is.null(out$migrations[[i]]$end_time)){
       end_time <- as.double(out$migrations[[i]]$end_time)
     } else if (!is.null(out$defaults$migration$end_time)) {
       end_time <- as.double(out$defaults$migration$end_time)
     } else {
+      source_index <- match(out$migrations[[i]]$source, deme_names)
+      dest_index <- match(out$migrations[[i]]$dest, deme_names)
+      source_last_epoch <- length(out$demes[[source_index]]$epochs)
+      dest_last_epoch <- length(out$demes[[source_index]]$epochs)
+
       end_time <- as.double(
-        max(out$demes$demes[[out$migrations[[i]]$source]]$end_time,
-            out$demes$demes[[out$migrations[[i]]$dest]]$end_time))
+        max(out$demes[[source_index]]$epoch[[source_last_epoch]]$end_time,
+            out$demes[[dest_index]]$epoch[[dest_last_epoch]]$end_time))
     }
     return(end_time)
   }
+}
+
+get_ancestors_endtime <- function(out, i, deme_names){
+  ancestor_name <- out$demes[[i]]$ancestors[1]
+  ancestor_index <- match(ancestor_name, deme_names)
+  last_epoch <- length(out$demes[[ancestor_index]]$epochs)
+
+  return(out$demes[[ancestor_index]]$epochs[[last_epoch]]$end_time)
 }
