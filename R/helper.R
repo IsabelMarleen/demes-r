@@ -13,6 +13,8 @@ order_demes <- function(deme) {
 
     ordered_deme$demes[[i]]$name <- deme$demes[[i]]$name
     ordered_deme$demes[[i]]$description <- deme$demes[[i]]$description
+    ordered_deme$demes[[i]]$ancestors <- deme$demes[[i]]$ancestors
+    ordered_deme$demes[[i]]$proportions <- deme$demes[[i]]$proportions
     ordered_deme$demes[[i]]$start_time <- deme$demes[[i]]$start_time
 
     ordered_deme$demes[[i]]$epochs <- list()
@@ -28,8 +30,6 @@ order_demes <- function(deme) {
         ordered_deme$demes[[i]]$epochs[[j]]$cloning_rate <- deme$demes[[i]]$epochs[[j]]$cloning_rate
       }
     }
-    ordered_deme$demes[[i]]$proportions <- deme$demes[[i]]$proportions
-    ordered_deme$demes[[i]]$ancestors <- deme$demes[[i]]$ancestors
   }
 
   ordered_deme$migrations <- list()
@@ -72,10 +72,22 @@ conv_prop_vec <- function(demes){
   return(demes)
 }
 
+conv_migr <- function(demes){
+  if (length(demes$migrations) > 0){
+    for (j in 1:length(demes$migrations)){
+      if (length(demes$migrations[[j]]) > 0){
+        demes$migrations[[j]]$rate <- as.double(demes$migrations[[j]]$rate)
+      }
+    }
+  }
+  return(demes)
+}
+
 post_process_expected <- function(exp){
   exp <- order_demes(exp)
   exp <- convert_infinity(exp)
-  exp <- conv_prop_vec(exp)
+  #exp <- conv_prop_vec(exp)
+  exp <- conv_migr(exp)
 
   return(exp)
 }
