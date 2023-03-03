@@ -392,7 +392,7 @@ validate_migration_times <- function(out, i, time, deme_names){
       source_index <- match(out$migrations[[i]]$source, deme_names)
       dest_index <- match(out$migrations[[i]]$dest, deme_names)
       source_last_epoch <- length(out$demes[[source_index]]$epochs)
-      dest_last_epoch <- length(out$demes[[source_index]]$epochs)
+      dest_last_epoch <- length(out$demes[[dest_index]]$epochs)
 
       end_time <- as.double(
         max(out$demes[[source_index]]$epoch[[source_last_epoch]]$end_time,
