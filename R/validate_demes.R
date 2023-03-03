@@ -36,12 +36,12 @@ validate_demes <- function(inp){
   }
 
   # Demes validation
-  # Attempting to validate deme-level defaults insofar as possible
-  if (!all(inp$demes$defaults$epoch$start_size >= 0 & !is.null(inp$demes$defaults$epoch$start_size))){
-    stop("Epoch start_size cannot be negative, but a negative deme-level default value was specified.", .call=FALSE)
-  }
-
   for (i in 1:length(inp$demes)){
+    # Attempting to validate deme-level defaults insofar as possible
+    if (!all(inp$demes[[i]]$defaults$epoch$start_size >= 0 & !is.null(inp$demes[[i]]$defaults$epoch$start_size))){
+      stop("Epoch start_size cannot be negative, but a negative deme-level default value was specified.", .call=FALSE)
+    }
+
     # Name
     if (is.null(inp$demes[[i]]$name)){
       stop(paste("Every deme must have a name, but deme", i, "does not have one.", .call=F))
@@ -50,7 +50,7 @@ validate_demes <- function(inp){
     # Description
     if (is.null(inp$demes[[i]]$description) & !is.null(inp$defaults$deme$description)){
       out$demes[[i]]$description <- inp$defaults$deme$description
-    } else {
+    } else if (is.null(inp$demes[[i]]$description)) {
       out$demes[[i]]$description <- ""
     }
 
@@ -62,15 +62,15 @@ validate_demes <- function(inp){
     }
 
     # Proportions
-    if (!is.null(inp$demes[[i]]$proportions)){
+    if (!is.null(out$demes[[i]]$proportions)){
       if(length(out$demes[[i]]$proportions) > 0){
         out$demes[[i]]$proportions <- list(as.double(inp$demes[[i]]$proportions))
       }
     } else if (!is.null(inp$defaults$deme$proportions)){
       out$demes[[i]]$proportions <- list(as.double(inp$defaults$deme$proportions))
-    } else if (length(inp$demes[[i]]$ancestors) == 1){
+    } else if (length(out$demes[[i]]$ancestors) == 1){
       out$demes[[i]]$proportions <- list(as.double(1))
-    } else if(length(inp$demes[[i]]$ancestors) == 0){
+    } else if(length(out$demes[[i]]$ancestors) == 0){
         out$demes[[i]]$proportions <- list()
     } else{
         stop("proportions cannot be determined with the information provided. proportions must either be specified explicitly, via defaults or have one or less ancestors.", .call=FALSE)
@@ -82,10 +82,10 @@ validate_demes <- function(inp){
     # Start time
     if (!is.null(inp$demes[[i]]$start_time)){
       out$demes[[i]]$start_time <- as.double(out$demes[[i]]$start_time)
-    } else if(!is.null(inp$demes$defaults$start_time)){
-      out$demes[[i]]$start_time <-  as.double(inp$demes$defaults$start_time)
-    } else if (!is.null(inp$defaults$demes$start_time)){
-      out$demes[[i]]$start_time <-  as.double(inp$defaults$demes$start_time)
+    } else if(!is.null(inp$demes[[i]]$defaults$start_time)){
+      out$demes[[i]]$start_time <-  as.double(inp$demes[[i]]$defaults$start_time)
+    } else if (!is.null(inp$defaults$deme$start_time)){
+      out$demes[[i]]$start_time <-  as.double(inp$defaults$deme$start_time)
     } else if (!is.null(inp$defaults$epoch$start_time)){
       out$demes[[i]]$start_time <-  as.double(inp$defaults$epoch$start_time)
     } else if (length(out$demes[[i]]$ancestors) == 0){
@@ -122,17 +122,17 @@ validate_demes <- function(inp){
 
       # Epoch start time
       if (j == 1){
-        out_curr_epoch$start_time <- out$demes[[i]]$start_time
+        out_curr_epoch$start_time <- as.double(out$demes[[i]]$start_time)
       } else if (j > 1) {
-        out_curr_epoch$start_time <- out$demes[[i]]$epochs[[j-1]]$end_time
+        out_curr_epoch$start_time <- as.double(out$demes[[i]]$epochs[[j-1]]$end_time)
       }
 
       # Epoch end time
       if (is.null(out_curr_epoch$end_time)){
-        if (!is.null(inp$demes$defaults$epoch$end_time)){
-          out_curr_epoch$end_time <- inp$demes$defaults$epoch$end_time
+        if (!is.null(inp$demes[[i]]$defaults$epoch$end_time)){
+          out_curr_epoch$end_time <- as.double(inp$demes[[i]]$defaults$epoch$end_time)
         } else if (!is.null(inp$defaults$epoch$end_time)){
-          out_curr_epoch$end_time <- inp$defaults$epoch$end_time
+          out_curr_epoch$end_time <- as.double(inp$defaults$epoch$end_time)
         } else if (j == length(out$demes[[i]]$epochs)) {
           out_curr_epoch$end_time <- as.double(0)
         } else {
@@ -144,32 +144,34 @@ validate_demes <- function(inp){
         if (out_curr_epoch$end_time >= out$demes[[i]]$epochs[[j-1]]$end_time){
           stop(paste("The end_time values of successive epochs must be strictly decreasing, but in deme", i, "epoch", j, "is larger or equal to the end_time of epoch", j-1, "."), .call=FALSE)
         }
+      } else {
+        out_curr_epoch$end_time <- as.double(out_curr_epoch$end_time)
       }
 
       # Epoch start size and end size
-      if (is.null(out_curr_epoch$start_size)){ # Resolve start size defaults
-        if (!is.null(inp$defaults$epoch$start_size)){
-          out_curr_epoch$start_size <- inp$defaults$epoch$start_size
-        } else if (!is.null(inp$demes$defaults$epoch$start_size)){
-          out_curr_epoch$start_size <- inp$demes$defaults$epoch$start_size
-        }
+      if (!is.null(out_curr_epoch$start_size)){
+        out_curr_epoch$start_size <- as.double(out_curr_epoch$start_size)
+      } else if (!is.null(inp$demes[[i]]$defaults$epoch$start_size)){ # Resolve start size defaults
+        out_curr_epoch$start_size <- as.double(inp$demes[[i]]$defaults$epoch$start_size)
+      } else if (!is.null(inp$defaults$epoch$start_size)){
+        out_curr_epoch$start_size <- as.double(inp$defaults$epoch$start_size)
       }
 
-      if (is.null(out_curr_epoch$end_size)){ # Resolve end size defaults
-        if (!is.null(inp$defaults$epoch$end_size)){
-          out_curr_epoch$end_size <- inp$defaults$epoch$end_size
-        } else if (!is.null(inp$demes$defaults$epoch$end_size)){
-          out_curr_epoch$end_size <- inp$demes$defaults$epoch$end_size
-        }
+      if (!is.null(out_curr_epoch$end_size)){
+        out_curr_epoch$end_size <- as.double(out_curr_epoch$end_size)
+      } else if (!is.null(inp$demes[[i]]$defaults$epoch$end_size)){ # Resolve end size defaults
+        out_curr_epoch$end_size <- as.double(inp$demes[[i]]$defaults$epoch$end_size)
+      } else if (!is.null(inp$defaults$epoch$end_size)){
+          out_curr_epoch$end_size <- as.double(inp$defaults$epoch$end_size)
       }
 
       if (j == 1){
         if (is.null(out_curr_epoch$end_size) & is.null(out_curr_epoch$start_size)){
           stop(paste("In the first epoch in each deme, at least one of start_size or end_size must be specified, possibly via default values. In deme", i, "both values were missing."), .call=FALSE)
         } else if (is.null(out_curr_epoch$start_size)){
-          out_curr_epoch$start_size <- out_curr_epoch$end_size
+          out_curr_epoch$start_size <- as.double(out_curr_epoch$end_size)
         } else if (is.null(out_curr_epoch$end_size)){
-          out_curr_epoch$end_size <- out_curr_epoch$start_size
+          out_curr_epoch$end_size <- as.double(out_curr_epoch$start_size)
         }
 
         if (out$demes[[i]]$start_time == Inf & out_curr_epoch$start_size != out_curr_epoch$end_size){
@@ -177,17 +179,17 @@ validate_demes <- function(inp){
         }
       } else {
         if (is.null(out_curr_epoch$start_size)){
-          out_curr_epoch$start_size <- out$demes[[i]]$epochs[[j-1]]$end_size
+          out_curr_epoch$start_size <- as.double(out$demes[[i]]$epochs[[j-1]]$end_size)
         }
         if (is.null(out_curr_epoch$end_size)){
-          out_curr_epoch$end_size <- out_curr_epoch$start_size
+          out_curr_epoch$end_size <- as.double(out_curr_epoch$start_size)
         }
       }
 
       # Size function
       if (is.null(out_curr_epoch$size_function)){
-        if (!is.null(inp$demes$defaults$epoch$size_function)){
-          out_curr_epoch$size_function <- inp$demes$defaults$epoch$size_function
+        if (!is.null(inp$demes[[i]]$defaults$epoch$size_function)){
+          out_curr_epoch$size_function <- inp$demes[[i]]$defaults$epoch$size_function
         } else if (!is.null(inp$defaults$epoch$size_function)){
           out_curr_epoch$size_function <- inp$defaults$epoch$size_function
         } else {
@@ -206,8 +208,8 @@ validate_demes <- function(inp){
 
       # Selfing rate
       if (is.null(out_curr_epoch$selfing_rate)){
-        if (!is.null(inp$demes$defaults$epoch$selfing_rate)){
-          out_curr_epoch$selfing_rate <- inp$demes$defaults$epoch$selfing_rate
+        if (!is.null(inp$demes[[i]]$defaults$epoch$selfing_rate)){
+          out_curr_epoch$selfing_rate <- inp$demes[[i]]$defaults$epoch$selfing_rate
         } else if (!is.null(inp$defaults$epoch$selfing_rate)){
           out_curr_epoch$selfing_rate <- inp$defaults$epoch$selfing_rate
         } else {
@@ -215,10 +217,10 @@ validate_demes <- function(inp){
         }
       }
 
-        # Cloning rate
+      # Cloning rate
       if (is.null(out_curr_epoch$cloning_rate)){
-        if (!is.null(inp$demes$defaults$epoch$cloning_rate)){
-          out_curr_epoch$cloning_rate <- inp$demes$defaults$epoch$cloning_rate
+        if (!is.null(inp$demes[[i]]$defaults$epoch$cloning_rate)){
+          out_curr_epoch$cloning_rate <- inp$demes[[i]]$defaults$epoch$cloning_rate
         } else if (!is.null(inp$defaults$epoch$cloning_rate)){
           out_curr_epoch$cloning_rate <- inp$defaults$epoch$cloning_rate
         } else {
@@ -239,8 +241,8 @@ validate_demes <- function(inp){
     start_num_migr <- length(inp$migrations)
     for (i in 1:start_num_migr){
       # Rate
-      if (is.null(out$migrations[[i]]$rate) & !is.null(inp$defaults$migrations$rate)){
-        out$migrations[[i]]$rate <- as.double(inp$defaults$migrations$rate)
+      if (is.null(out$migrations[[i]]$rate) & !is.null(inp$defaults$migration$rate)){
+        out$migrations[[i]]$rate <- as.double(inp$defaults$migration$rate)
       } else if (is.null(out$migrations[[i]]$rate)){
         stop(paste0("If a migration is specified, a migration rate must be specified, possibly via default values. This is violated in migration", i, "."), .call=FALSE)
       } else {
@@ -252,21 +254,21 @@ validate_demes <- function(inp){
       }
 
       # Source
-      if (is.null(out$migrations[[i]]$source) & !is.null(inp$defaults$migrations$source)){
-        out$migrations[[i]]$source <- inp$defaults$migrations$source
+      if (is.null(out$migrations[[i]]$source) & !is.null(inp$defaults$migration$source) & is.null(out$migrations[[i]]$demes)){
+        out$migrations[[i]]$source <- inp$defaults$migration$source
       }
 
       # Dest
-      if (is.null(out$migrations[[i]]$dest) & !is.null(inp$defaults$migrations$dest)){
-        out$migrations[[i]]$dest<- inp$defaults$migrations$dest
+      if (is.null(out$migrations[[i]]$dest) & !is.null(inp$defaults$migration$dest) & is.null(out$migrations[[i]]$demes)){
+        out$migrations[[i]]$dest<- inp$defaults$migration$dest
       }
 
       # if (!(out$migrations[[i]]$dest %in% names(out$demes) ))
       # TODO: Throw error if dest / source does not match a population
 
       # Demes
-      if (is.null(out$migrations[[i]]$demes) & !is.null(inp$defaults$migrations$demes)){
-        out$migrations[[i]]$demes <- inp$defaults$migrations$demes
+      if (is.null(out$migrations[[i]]$demes) & !is.null(inp$defaults$migration$demes) & is.null(out$migrations[[i]]$dest) & is.null(out$migrations[[i]]$source)){
+        out$migrations[[i]]$demes <- inp$defaults$migration$demes
       }
 
       # Mode of migration
@@ -313,6 +315,8 @@ validate_demes <- function(inp){
             out$migrations[[pos_counter]]$dest <- sym_combs[1, k]
             out$migrations[[pos_counter]]$source <- sym_combs[2, k]
             out$migrations[[pos_counter]]$rate <- sym_migration$rate
+            out$migrations[[pos_counter]]$start_time <- sym_migration$start_time
+            out$migrations[[pos_counter]]$end_time <- sym_migration$end_time
             # start_time
             out$migrations[[pos_counter]]$start_time <- validate_migration_times(out, pos_counter, "start", deme_names)
             # end_time
@@ -394,7 +398,7 @@ validate_migration_times <- function(out, i, time, deme_names){
         max(out$demes[[source_index]]$epoch[[source_last_epoch]]$end_time,
             out$demes[[dest_index]]$epoch[[dest_last_epoch]]$end_time))
     }
-    return(end_time)
+    return(as.double(end_time))
   }
 }
 
@@ -403,5 +407,5 @@ get_ancestors_endtime <- function(out, i, deme_names){
   ancestor_index <- match(ancestor_name, deme_names)
   last_epoch <- length(out$demes[[ancestor_index]]$epochs)
 
-  return(out$demes[[ancestor_index]]$epochs[[last_epoch]]$end_time)
+  return(as.double(out$demes[[ancestor_index]]$epochs[[last_epoch]]$end_time))
 }
