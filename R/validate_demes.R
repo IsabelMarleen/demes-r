@@ -359,8 +359,41 @@ validate_demes <- function(inp){
     }
   }
 
-  if (is.null(inp$pulses)){
+  # Pulses
+  pulse_times <- c()
+  if (length(inp$pulses) == 0 | is.null(inp$pulses)){
     out$pulses <- list()
+  } else {
+    for (i in 1:length(inp$pulses)){
+      # Sources
+      if (is.null(inp$pulses[[i]]$sources) & !is.null(inp$defaults$pulse$sources)){
+        out$pulses[[i]]$sources <- inp$defaults$pulse$sources
+      } else if (is.null(inp$pulses[[i]]$sources)){
+        stop(paste("No sources were found for pulse", i, ". They are required for pulse resolution, however."), .call=F)
+      }
+      # Proportions
+      if (is.null(inp$pulses[[i]]$proportions) & !is.null(inp$defaults$pulse$proportions)){
+        out$pulses[[i]]$proportions <- inp$defaults$pulse$proportions
+      } else if (is.null(inp$pulses[[i]]$proportions)){
+        stop(paste("No proportions were found for pulse", i, ". They are required for pulse resolution, however."), .call=F)
+      }
+      # Dest
+      if (is.null(inp$pulses[[i]]$dest) & !is.null(inp$defaults$pulse$dest)){
+        out$pulses[[i]]$dest <- inp$defaults$pulse$dest
+      } else if (is.null(inp$pulses[[i]]$dest)){
+        stop(paste("No dest was found for pulse", i, ". It is required for pulse resolution, however."), .call=F)
+      }
+      # Time
+      if (is.null(inp$pulses[[i]]$time) & !is.null(inp$defaults$pulse$time)){
+        out$pulses[[i]]$time <- inp$defaults$pulse$time
+      } else if (is.null(inp$pulses[[i]]$time)){
+        stop(paste("No time was found for pulse", i, ". It is required for pulse resolution, however."), .call=F)
+      }
+      pulse_times[i] <- out$pulses[[i]]$time
+    }
+
+    # Sort pulses
+    out$pulses <- out$pulses[order(pulse_times, decreasing = TRUE)]
   }
 
   return(out)
