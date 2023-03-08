@@ -27,36 +27,15 @@ test_that("R parser results match the reference implementation in Python", {
   setup_env()
   setup_demes_spec()
 
-  # test_files <- list.files(get_test_file_path())
-  # test_files <- test_files[test_files == "minimal_01.yaml"]
-
   # get all valid test YAML files available in the Demes specification repository
-  # test_files <- file.path(get_spec_dir(), "test-cases", "valid") %>% list.files(pattern = ".yaml")
-  # test_files <- "basic_resolution_05.yaml"
-  test_files <- c(paste0("minimal_0", 1:2, ".yaml"),
-                  paste0("admixture_0", 1:9, ".yaml"), paste0("admixture_", 10:27, ".yaml"),
-                  paste0("deme_names_0", 1:3, ".yaml"),
-                  paste0("migration_0", 1:9, ".yaml"), "migration_10.yaml",
-                  paste0("structure_0", 1:8, ".yaml") ,
-                  "args_from_file_01.yaml",
-                  "admixture_and_split_01.yaml",
-                  "asymmetric_migration_01.yaml",
-                  "bad_pulse_time_01.yaml",
-                  paste0("deme_cloning_rate_0", 1:3, ".yaml"),
-                  "deme_selfing_rate_01.yaml",
-                  "size_function_defaults_01.yaml",
-                  paste0("split_0", 1:9, ".yaml"), "split_10.yaml",
-                  "selfing_cloning_01.yaml",
-                  paste0("size_changes_0", 1:9, ".yaml"), paste0("size_changes_", 10:32, ".yaml"),
-                  paste0("basic_resolution_0", 1:6, ".yaml"),
-                  paste0("deme_names_0", 1:3, ".yaml"),
-                  paste0("infinity_0", 1:8, ".yaml")
-                  )
-
+  test_files <- file.path(get_spec_dir(), "test-cases", "valid") %>% list.files(pattern = ".yaml")
+  # Remove files that cannot be parsed
+  # The first three don't pass because they have a deme named "y" and that is interpreted as TRUE in yaml 1.1 which is what the reader is based on
+  # For the last one it is the pre-parsed file that causes issues. It cannot be read by yaml::read_yaml without causing an error unless encoding UTF-16 is specified
+  test_files <- test_files[!(test_files %in% c("toplevel_defaults_deme_01.yaml", "successors_predecessors_01.yaml", "deme_end_time_01.yaml", "unicode_deme_name_04.yaml"))]
 
   for (f in test_files){
     path_preparsed_file <- parse_ref(get_test_file(f))
-    # print(path_preparsed_file)
 
     # validating a fully parsed model should not change anything
     # Use less strict expectation (as opposed to use_identical), because values should

@@ -239,6 +239,7 @@ validate_demes <- function(inp){
     out$migrations <- list()
   } else {
     start_num_migr <- length(inp$migrations)
+    migs <- NULL
     for (i in 1:start_num_migr){
       # Rate
       if (is.null(out$migrations[[i]]$rate) & !is.null(inp$defaults$migration$rate)){
@@ -295,68 +296,55 @@ validate_demes <- function(inp){
         sym_migration <- out$migrations[[i]]
         out$migrations[[i]]$demes <- NULL
         sym_combs <- combn(sym_migration$demes, 2) # Getting all combinations
+        asym_from_sym <- list()
+        mig_counter <- 1
 
         for (k in 1:ncol(sym_combs)){
-          if (k == 1){ # The very first asymmetric migration replaces the original symmetric migration
-            # First asymmetric migration of pair
-            out$migrations[[i]]$source <- sym_combs[1, k]
-            out$migrations[[i]]$dest <- sym_combs[2, k]
-            out$migrations[[i]]$rate <- sym_migration$rate
-            out$migrations[[i]]$start_time <- sym_migration$start_time
-            out$migrations[[i]]$end_time <- sym_migration$end_time
-            # start_time
-            out$migrations[[i]]$start_time <- validate_migration_times(out, i, "start", deme_names)
-            # end_time
-            out$migrations[[i]]$end_time <- validate_migration_times(out, i, "end", deme_names)
+          asym_from_sym[[mig_counter]] <- list()
 
-            # Second asymmetric migration of pair
-            pos_counter <- length(out$migrations)+1
-            out$migrations[[pos_counter]] <- list()
-            out$migrations[[pos_counter]]$dest <- sym_combs[1, k]
-            out$migrations[[pos_counter]]$source <- sym_combs[2, k]
-            out$migrations[[pos_counter]]$rate <- sym_migration$rate
-            out$migrations[[pos_counter]]$start_time <- sym_migration$start_time
-            out$migrations[[pos_counter]]$end_time <- sym_migration$end_time
-            # start_time
-            out$migrations[[pos_counter]]$start_time <- validate_migration_times(out, pos_counter, "start", deme_names)
-            # end_time
-            out$migrations[[pos_counter]]$end_time <- validate_migration_times(out, pos_counter, "end", deme_names)
+          # First asymmetric migration of pair
+          asym_from_sym[[mig_counter]]$source <- sym_combs[1, k]
+          asym_from_sym[[mig_counter]]$dest <- sym_combs[2, k]
+          asym_from_sym[[mig_counter]]$rate <- sym_migration$rate
+          asym_from_sym[[mig_counter]]$start_time <- sym_migration$start_time
+          asym_from_sym[[mig_counter]]$end_time <- sym_migration$end_time
+          # start_time
+          asym_from_sym[[mig_counter]]$start_time <- validate_migration_times(out, asym_from_sym[[mig_counter]], "start", deme_names)
+          # end_time
+          asym_from_sym[[mig_counter]]$end_time <- validate_migration_times(out, asym_from_sym[[mig_counter]], "end", deme_names)
 
-          } else {
-            pos_counter <- pos_counter + 1
-            out$migrations[[pos_counter]] <- list()
-            # First asymmetric migration of pair
-            out$migrations[[pos_counter]]$source <- sym_combs[1, k]
-            out$migrations[[pos_counter]]$dest <- sym_combs[2, k]
-            out$migrations[[pos_counter]]$rate <- sym_migration$rate
-            out$migrations[[pos_counter]]$start_time <- sym_migration$start_time
-            out$migrations[[pos_counter]]$end_time <- sym_migration$end_time
-            # start_time
-            out$migrations[[pos_counter]]$start_time <- validate_migration_times(out, pos_counter, "start", deme_names)
-            # end_time
-            out$migrations[[pos_counter]]$end_time <- validate_migration_times(out, pos_counter, "end", deme_names)
-
-            pos_counter <- pos_counter + 1
-            out$migrations[[pos_counter]] <- list()
-            # Second asymmetric migration of pair
-            out$migrations[[pos_counter]]$dest <- sym_combs[1, k]
-            out$migrations[[pos_counter]]$source <- sym_combs[2, k]
-            out$migrations[[pos_counter]]$rate <- sym_migration$rate
-            out$migrations[[pos_counter]]$start_time <- sym_migration$start_time
-            out$migrations[[pos_counter]]$end_time <- sym_migration$end_time
-            # start_time
-            out$migrations[[pos_counter]]$start_time <- validate_migration_times(out, pos_counter, "start", deme_names)
-            # end_time
-            out$migrations[[pos_counter]]$end_time <- validate_migration_times(out, pos_counter, "end", deme_names)
-          }
+          # Second asymmetric migration of pair
+          mig_counter <- mig_counter+1
+          asym_from_sym[[mig_counter]] <- list()
+          asym_from_sym[[mig_counter]]$dest <- sym_combs[1, k]
+          asym_from_sym[[mig_counter]]$source <- sym_combs[2, k]
+          asym_from_sym[[mig_counter]]$rate <- sym_migration$rate
+          asym_from_sym[[mig_counter]]$start_time <- sym_migration$start_time
+          asym_from_sym[[mig_counter]]$end_time <- sym_migration$end_time
+          # start_time
+          asym_from_sym[[mig_counter]]$start_time <- validate_migration_times(out, asym_from_sym[[mig_counter]], "start", deme_names)
+          # end_time
+          asym_from_sym[[mig_counter]]$end_time <- validate_migration_times(out, asym_from_sym[[mig_counter]], "end", deme_names)
+          mig_counter <- mig_counter+1
+        }
+        if (is.null(migs)){
+          migs <- asym_from_sym
+        } else{
+          migs <- c(migs, asym_from_sym)
         }
       } else { # asymmetric migrations
         # start_time
-        out$migrations[[i]]$start_time <- validate_migration_times(out, i, "start", deme_names)
+        out$migrations[[i]]$start_time <- validate_migration_times(out, out$migrations[[i]], "start", deme_names)
         # end_time
-        out$migrations[[i]]$end_time <- validate_migration_times(out, i, "end", deme_names)
+        out$migrations[[i]]$end_time <- validate_migration_times(out, out$migrations[[i]], "end", deme_names)
+        if (is.null(migs)){
+          migs <- list(out$migrations[[i]])
+        } else{
+          migs <- c(migs, list(out$migrations[[i]]))
+        }
       }
     }
+    out$migrations <- migs
   }
 
   # Pulses
@@ -401,15 +389,15 @@ validate_demes <- function(inp){
 
 
 
-validate_migration_times <- function(out, i, time, deme_names){
+validate_migration_times <- function(out, mig, time, deme_names){
   if (time == "start"){
-    if (!is.null(out$migrations[[i]]$start_time)){
-      start_time <- as.double(out$migrations[[i]]$start_time)
+    if (!is.null(mig$start_time)){
+      start_time <- as.double(mig$start_time)
     } else if (!is.null(out$defaults$migration$start_time)) {
       start_time <- as.double(out$defaults$migration$start_time)
     } else {
-      source_index <- match(out$migrations[[i]]$source, deme_names)
-      dest_index <- match(out$migrations[[i]]$dest, deme_names)
+      source_index <- match(mig$source, deme_names)
+      dest_index <- match(mig$dest, deme_names)
       start_time <- as.double(
         min(out$demes[[source_index]]$start_time,
             out$demes[[dest_index]]$start_time))
@@ -417,13 +405,13 @@ validate_migration_times <- function(out, i, time, deme_names){
     return(start_time)
 
   } else if (time == "end"){
-    if (!is.null(out$migrations[[i]]$end_time)){
-      end_time <- as.double(out$migrations[[i]]$end_time)
+    if (!is.null(mig$end_time)){
+      end_time <- as.double(mig$end_time)
     } else if (!is.null(out$defaults$migration$end_time)) {
       end_time <- as.double(out$defaults$migration$end_time)
     } else {
-      source_index <- match(out$migrations[[i]]$source, deme_names)
-      dest_index <- match(out$migrations[[i]]$dest, deme_names)
+      source_index <- match(mig$source, deme_names)
+      dest_index <- match(mig$dest, deme_names)
       source_last_epoch <- length(out$demes[[source_index]]$epochs)
       dest_last_epoch <- length(out$demes[[dest_index]]$epochs)
 
