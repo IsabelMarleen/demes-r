@@ -46,7 +46,12 @@ parse_ref <- function(input_file){
   return(path_preparsed_file)
 }
 
-# Get path to a test file in the Demes specification directory
+# Get path to a valid test file in the Demes specification directory
 get_test_file <- function(file) {
   file.path(get_spec_dir(), "test-cases", "valid", file)
+}
+
+# Get path to an invalid test file in the Demes specification directory
+get_invalid_test_file <- function(file) {
+  file.path(get_spec_dir(), "test-cases", "invalid", file)
 }

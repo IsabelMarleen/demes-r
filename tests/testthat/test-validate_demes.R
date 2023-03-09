@@ -1,4 +1,5 @@
 test_that("minimal_01.yaml is parsed correctly", {
+  setup_demes_spec()
   inp <- yaml::read_yaml(get_test_file("minimal_01.yaml"))
   d <- validate_demes(inp)
 
@@ -15,9 +16,9 @@ test_that("minimal_01.yaml is parsed correctly", {
   named_list <- list()
   names(named_list) <- character()
   expect_equal(d$metadata, named_list)
-  expect_equal(d$demes[[1]]$ancestors, list())
+  expect_equal(d$demes[[1]]$ancestors, vector(mode="character"))
   expect_identical(d$demes[[1]]$description, '')
-  expect_equal(d$demes[[1]]$proportions, vector(mode="integer"))
+  expect_equal(d$demes[[1]]$proportions, vector(mode="double"))
   expect_identical(d$migrations, list())
   expect_identical(d$pulses, list())
 })
@@ -26,32 +27,15 @@ test_that("R parser results match the reference implementation in Python", {
   setup_env()
   setup_demes_spec()
 
-  # test_files <- list.files(get_test_file_path())
-  # test_files <- test_files[test_files == "minimal_01.yaml"]
-
   # get all valid test YAML files available in the Demes specification repository
-  # test_files <- file.path(get_spec_dir(), "test-cases", "valid") %>% list.files(pattern = ".yaml")
-  test_files <- c(paste0("minimal_0", 1:2, ".yaml"),
-                                            paste0("admixture_0", 1:9, ".yaml"), paste0("admixture_", 10:27, ".yaml"),
-                                            paste0("deme_names_0", 1:3, ".yaml"),
-                                            paste0("migration_0", 1:9, ".yaml"), "migration_10.yaml",
-                                            paste0("structure_0", 1:8, ".yaml"),
-                                            "args_from_file_01.yaml",
-                                            "admixture_and_split_01.yaml",
-                                            "asymmetric_migration_01.yaml",
-                                            "bad_pulse_time_01.yaml",
-                                            paste0("deme_cloning_rate_0", 1:3, ".yaml"),
-                                            "deme_selfing_rate_01.yaml",
-                                            "size_function_defaults_01.yaml",
-                                            paste0("split_0", 1:9, ".yaml"), "split_10.yaml",
-                                            "selfing_cloning_01.yaml",
-                                            paste0("size_changes_0", 1:9, ".yaml"), paste0("size_changes_", 10:32, ".yaml")
-                                            )
-
+  test_files <- file.path(get_spec_dir(), "test-cases", "valid") %>% list.files(pattern = ".yaml")
+  # Remove files that cannot be parsed
+  # The first three don't pass because they have a deme named "y" and that is interpreted as TRUE in yaml 1.1 which is what the reader is based on
+  # For the last one it is the pre-parsed file that causes issues. It cannot be read by yaml::read_yaml without causing an error unless encoding UTF-16 is specified
+  test_files <- test_files[!(test_files %in% c("toplevel_defaults_deme_01.yaml", "successors_predecessors_01.yaml", "deme_end_time_01.yaml", "unicode_deme_name_04.yaml"))]
 
   for (f in test_files){
     path_preparsed_file <- parse_ref(get_test_file(f))
-    # print(path_preparsed_file)
 
     # validating a fully parsed model should not change anything
     # Use less strict expectation (as opposed to use_identical), because values should
@@ -78,3 +62,17 @@ test_that("R parser results match the reference implementation in Python", {
   #       This is done to avoid type errors for users, when default values like 0, read as an integer by read_yaml() are changed interactively
   #   3) 1) and 2) mean that an extra processing step has to happen to the true comparison object in the testing
 })
+
+# test_that("R parser rejects all invalid test cases", {
+#   setup_demes_spec()
+#
+#   # get all invalid test YAML files available in the Demes specification repository
+#   test_files <- file.path(get_spec_dir(), "test-cases", "invalid") %>% list.files(pattern = ".yaml")
+#
+#   for (f in test_files){
+#     inp <- yaml::read_yaml(get_invalid_test_file(f))
+#     try(validate_demes(inp))
+#     print(f)
+#     expect_error(validate_demes(inp), label = f)
+#   }
+# })
