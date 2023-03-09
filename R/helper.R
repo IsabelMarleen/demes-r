@@ -60,12 +60,18 @@ order_demes <- function(deme) {
   return(ordered_deme)
 }
 
-conv_prop_list <- function(demes){
+conv_prop_anc_vec <- function(demes){
   for (i in 1:length(demes$demes)){
     if (length(demes$demes[[i]]$proportions) > 0){
-      demes$demes[[i]]$proportions <- list(as.double(demes$demes[[i]]$proportions))
+      demes$demes[[i]]$proportions <- as.double(demes$demes[[i]]$proportions)
     } else{
-      demes$demes[[i]]$proportions <- list()
+      demes$demes[[i]]$proportions <- vector(mode="double")
+    }
+
+    if (length(demes$demes[[i]]$ancestors) > 0){
+      demes$demes[[i]]$ancestors <- unlist(demes$demes[[i]]$ancestors)
+    } else{
+      demes$demes[[i]]$ancestors <- vector(mode="character")
     }
   }
 
@@ -86,7 +92,7 @@ conv_migr <- function(demes){
 post_process_expected <- function(exp){
   exp <- order_demes(exp)
   exp <- convert_infinity(exp)
-  exp <- conv_prop_list(exp)
+  exp <- conv_prop_anc_vec(exp)
   exp <- conv_migr(exp)
 
   return(exp)

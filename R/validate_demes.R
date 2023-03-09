@@ -55,29 +55,45 @@ validate_demes <- function(inp){
     }
 
     # Ancestors
-    if (is.null(inp$demes[[i]]$ancestors) & !is.null(inp$defaults$deme$ancestors)){
-      out$demes[[i]]$ancestors <- inp$defaults$deme$ancestors
-    } else if (is.null(inp$demes[[i]]$ancestors)) {
-      out$demes[[i]]$ancestors <- list()
+    if (length(inp$demes[[i]]$ancestors) > 0){
+      out$demes[[i]]$ancestors <- unlist(out$demes[[i]]$ancestors)
+    } else if (is.null(inp$demes[[i]]$ancestors) & !is.null(inp$defaults$deme$ancestors)){
+      out$demes[[i]]$ancestors <- unlist(inp$defaults$deme$ancestors)
+    } else {
+      out$demes[[i]]$ancestors <- vector(mode="character")
+    }
+    if (out$demes[[i]]$name %in% out$demes[[i]]$ancestors){
+      stop(paste0("No deme may appear in its own ancestors list. This was violated in deme ", i, "."), .call=F)
+    } else if (length(out$demes[[i]]$ancestors) != length(unique(out$demes[[i]]$ancestors))){
+      stop(paste0("Each element of the ancestors list must be unique. This was violated in deme ", i, "."), .call=F)
+    }
+    is_char_ancestor <- sapply(out$demes[[i]]$ancestors, is.character)
+    if (any(!is_char_ancestor)){
+      stop(paste0("Each element of the ancestors list must be a string. This was violated in deme ", i, ", where an ancestor had type ", typeof(out$demes[[i]]$ancestors[!is_char_ancestor]), "."), .call=F)
     }
 
     # Proportions
     if (!is.null(out$demes[[i]]$proportions)){
       if(length(out$demes[[i]]$proportions) > 0){
-        out$demes[[i]]$proportions <- list(as.double(inp$demes[[i]]$proportions))
+        out$demes[[i]]$proportions <- as.double(unlist(inp$demes[[i]]$proportions))
+      } else {
+        out$demes[[i]]$proportions <- vector(mode="double")
       }
     } else if (!is.null(inp$defaults$deme$proportions)){
-      out$demes[[i]]$proportions <- list(as.double(inp$defaults$deme$proportions))
+      out$demes[[i]]$proportions <- as.double(unlist(inp$defaults$deme$proportions))
     } else if (length(out$demes[[i]]$ancestors) == 1){
-      out$demes[[i]]$proportions <- list(as.double(1))
+      out$demes[[i]]$proportions <- as.double(1)
     } else if(length(out$demes[[i]]$ancestors) == 0){
-        out$demes[[i]]$proportions <- list()
+        out$demes[[i]]$proportions <- vector(mode="double")
     } else{
         stop("proportions cannot be determined with the information provided. proportions must either be specified explicitly, via defaults or have one or less ancestors.", .call=FALSE)
     }
-    #} #else if (is.null(inp$demes[[i]]$proportions)){
-    #   out$demes[[i]]$proportions <- list(as.double(inp$demes[[i]]$proportions))
-    # }
+
+    if (sum(out$demes[[i]]$proportions) > 1){
+      stop(paste0("If the proportions list is not empty, then the values must sum to 1. This was violated in deme ", i, "."), .call = FALSE)
+    } else if (length(out$demes[[i]]$proportions) != length(out$demes[[i]]$ancestors)){
+      stop(paste0("The proportions list must have the same length as the ancestors list. This was violated in deme ", i, "."), .call=FALSE)
+    }
 
     # Start time
     if (!is.null(inp$demes[[i]]$start_time)){
@@ -94,6 +110,12 @@ validate_demes <- function(inp){
       out$demes[[i]]$start_time <- as.double(get_ancestors_endtime(out, i, deme_names))
     } else {
       stop(paste("start_time of deme", i, "cannot be determined from the provided information."), .call=FALSE)
+    }
+
+    if (out$demes[[i]]$start_time == Inf & length(out$demes[[i]]$ancestors) != 0){
+      stop(paste0("If the start_time of a deme is infinity, ancestors must be an empty list. This is violated in deme ", i, "."), .call=F)
+    } else if (out$demes[[i]]$start_time != Inf & length(out$demes[[i]]$ancestors) == 0){
+      stop(paste0("If a deme has a finite start_time, it must have specified ancestors. This is violated in deme ", i, "."), .call=F)
     }
 
     # Epochs
@@ -382,6 +404,16 @@ validate_demes <- function(inp){
 
     # Sort pulses
     out$pulses <- out$pulses[order(pulse_times, decreasing = TRUE)]
+  }
+
+  # Final Validation
+  # Demes
+  if (length(out$demes) == 0){
+    stop("There must be at least one deme, but none were specified.", .call=F)
+  }
+  deme_names <- unlist(lapply(out$demes, function(x){return(x$name)}))
+  if (length(deme_names) != length(unique(deme_names))){
+    stop(paste("Deme names must be unique in the model, but deme(s)", unique(deme_names[duplicated(deme_names)]), "appear(s) several times"))
   }
 
   return(out)

@@ -16,9 +16,9 @@ test_that("minimal_01.yaml is parsed correctly", {
   named_list <- list()
   names(named_list) <- character()
   expect_equal(d$metadata, named_list)
-  expect_equal(d$demes[[1]]$ancestors, list())
+  expect_equal(d$demes[[1]]$ancestors, vector(mode="character"))
   expect_identical(d$demes[[1]]$description, '')
-  expect_equal(d$demes[[1]]$proportions, list())
+  expect_equal(d$demes[[1]]$proportions, vector(mode="double"))
   expect_identical(d$migrations, list())
   expect_identical(d$pulses, list())
 })
@@ -62,3 +62,17 @@ test_that("R parser results match the reference implementation in Python", {
   #       This is done to avoid type errors for users, when default values like 0, read as an integer by read_yaml() are changed interactively
   #   3) 1) and 2) mean that an extra processing step has to happen to the true comparison object in the testing
 })
+
+# test_that("R parser rejects all invalid test cases", {
+#   setup_demes_spec()
+#
+#   # get all invalid test YAML files available in the Demes specification repository
+#   test_files <- file.path(get_spec_dir(), "test-cases", "invalid") %>% list.files(pattern = ".yaml")
+#
+#   for (f in test_files){
+#     inp <- yaml::read_yaml(get_invalid_test_file(f))
+#     try(validate_demes(inp))
+#     print(f)
+#     expect_error(validate_demes(inp), label = f)
+#   }
+# })
