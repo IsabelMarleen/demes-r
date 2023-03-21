@@ -5,15 +5,15 @@ validate_demes <- function(inp){
 
   # Check for time_units and generation_time
   if (is.null(inp$time_units)){
-    stop("time_units must be specified but was missing.", .call = FALSE)
+    stop("time_units must be specified but was missing.", call. = FALSE)
   }
 
   if (is.null(inp$generation_time) & out$time_units == "generations"){
     out$generation_time <- as.double(1)
   } else if(out$time_units == "generations" & out$generation_time != 1) {
-    stop("When time_units is 'generations', generation_time must be equal to 1 and can be omitted.", .call = FALSE)
+    stop("When time_units is 'generations', generation_time must be equal to 1 and can be omitted.", call. = FALSE)
   } else if (is.null(inp$generation_time)) {
-    stop("generation_time must be specified, unless time_units is 'generations'.", .call = FALSE)
+    stop("generation_time must be specified, unless time_units is 'generations'.", call. = FALSE)
   }
 
 
@@ -32,19 +32,19 @@ validate_demes <- function(inp){
 
   # Attempting to validate top-level defaults insofar as possible
   if (!all(inp$defaults$epoch$start_size >= 0 & !is.null(inp$defaults$epoch$start_size))){
-    stop("Epoch start_size cannot be negative, but a negative top-level default value was specified.", .call=FALSE)
+    stop("Epoch start_size cannot be negative, but a negative top-level default value was specified.", call.=FALSE)
   }
 
   # Demes validation
   for (i in 1:length(inp$demes)){
     # Attempting to validate deme-level defaults insofar as possible
     if (!all(inp$demes[[i]]$defaults$epoch$start_size >= 0 & !is.null(inp$demes[[i]]$defaults$epoch$start_size))){
-      stop("Epoch start_size cannot be negative, but a negative deme-level default value was specified.", .call=FALSE)
+      stop("Epoch start_size cannot be negative, but a negative deme-level default value was specified.", call.=FALSE)
     }
 
     # Name
     if (is.null(inp$demes[[i]]$name)){
-      stop(paste("Every deme must have a name, but deme", i, "does not have one.", .call=F))
+      stop(paste("Every deme must have a name, but deme", i, "does not have one.", call.=F))
     }
 
     # Description
@@ -63,13 +63,13 @@ validate_demes <- function(inp){
       out$demes[[i]]$ancestors <- vector(mode="character")
     }
     if (out$demes[[i]]$name %in% out$demes[[i]]$ancestors){
-      stop(paste0("No deme may appear in its own ancestors list. This was violated in deme ", i, "."), .call=F)
+      stop(paste0("No deme may appear in its own ancestors list. This was violated in deme ", i, "."), call.=F)
     } else if (length(out$demes[[i]]$ancestors) != length(unique(out$demes[[i]]$ancestors))){
-      stop(paste0("Each element of the ancestors list must be unique. This was violated in deme ", i, "."), .call=F)
+      stop(paste0("Each element of the ancestors list must be unique. This was violated in deme ", i, "."), call.=F)
     }
     is_char_ancestor <- sapply(out$demes[[i]]$ancestors, is.character)
     if (any(!is_char_ancestor)){
-      stop(paste0("Each element of the ancestors list must be a string. This was violated in deme ", i, ", where an ancestor had type ", typeof(out$demes[[i]]$ancestors[!is_char_ancestor]), "."), .call=F)
+      stop(paste0("Each element of the ancestors list must be a string. This was violated in deme ", i, ", where an ancestor had type ", typeof(out$demes[[i]]$ancestors[!is_char_ancestor]), "."), call.=F)
     }
 
     # Proportions
@@ -86,13 +86,13 @@ validate_demes <- function(inp){
     } else if(length(out$demes[[i]]$ancestors) == 0){
         out$demes[[i]]$proportions <- vector(mode="double")
     } else{
-        stop("proportions cannot be determined with the information provided. proportions must either be specified explicitly, via defaults or have one or less ancestors.", .call=FALSE)
+        stop("proportions cannot be determined with the information provided. proportions must either be specified explicitly, via defaults or have one or less ancestors.", call.=FALSE)
     }
 
     if (sum(out$demes[[i]]$proportions) > 1){
-      stop(paste0("If the proportions list is not empty, then the values must sum to 1. This was violated in deme ", i, "."), .call = FALSE)
+      stop(paste0("If the proportions list is not empty, then the values must sum to 1. This was violated in deme ", i, "."), call. = FALSE)
     } else if (length(out$demes[[i]]$proportions) != length(out$demes[[i]]$ancestors)){
-      stop(paste0("The proportions list must have the same length as the ancestors list. This was violated in deme ", i, "."), .call=FALSE)
+      stop(paste0("The proportions list must have the same length as the ancestors list. This was violated in deme ", i, "."), call.=FALSE)
     }
 
     # Start time
@@ -109,13 +109,13 @@ validate_demes <- function(inp){
     } else if (length(out$demes[[i]]$ancestors) == 1 & get_ancestors_endtime(out, i, deme_names) > 0){
       out$demes[[i]]$start_time <- as.double(get_ancestors_endtime(out, i, deme_names))
     } else {
-      stop(paste("start_time of deme", i, "cannot be determined from the provided information."), .call=FALSE)
+      stop(paste("start_time of deme", i, "cannot be determined from the provided information."), call.=FALSE)
     }
 
     if (out$demes[[i]]$start_time == Inf & length(out$demes[[i]]$ancestors) != 0){
-      stop(paste0("If the start_time of a deme is infinity, ancestors must be an empty list. This is violated in deme ", i, "."), .call=F)
+      stop(paste0("If the start_time of a deme is infinity, ancestors must be an empty list. This is violated in deme ", i, "."), call.=F)
     } else if (out$demes[[i]]$start_time != Inf & length(out$demes[[i]]$ancestors) == 0){
-      stop(paste0("If a deme has a finite start_time, it must have specified ancestors. This is violated in deme ", i, "."), .call=F)
+      stop(paste0("If a deme has a finite start_time, it must have specified ancestors. This is violated in deme ", i, "."), call.=F)
     }
 
     # Epochs
@@ -158,13 +158,13 @@ validate_demes <- function(inp){
         } else if (j == length(out$demes[[i]]$epochs)) {
           out_curr_epoch$end_time <- as.double(0)
         } else {
-          stop(paste("Epoch end_time", j, "in deme", i, "cannot be determined."), .call=FALSE)
+          stop(paste("Epoch end_time", j, "in deme", i, "cannot be determined."), call.=FALSE)
         }
-      } else if (out_curr_epoch$end_time >= out$demes[[i]]$start_time){
-        stop(paste("The end_time of epoch", j, "is larger or equal to the start_time of deme", i, "but needs to be strictly smaller."), .call=FALSE)
+      } else if (as.double(out_curr_epoch$end_time) >= out$demes[[i]]$start_time){
+        stop(paste("The end_time of epoch", j, "is larger or equal to the start_time of deme", i, "but needs to be strictly smaller."), call.=FALSE)
       } else if (j > 1){
         if (out_curr_epoch$end_time >= out$demes[[i]]$epochs[[j-1]]$end_time){
-          stop(paste("The end_time values of successive epochs must be strictly decreasing, but in deme", i, "epoch", j, "is larger or equal to the end_time of epoch", j-1, "."), .call=FALSE)
+          stop(paste("The end_time values of successive epochs must be strictly decreasing, but in deme", i, "epoch", j, "is larger or equal to the end_time of epoch", j-1, "."), call.=FALSE)
         }
       } else {
         out_curr_epoch$end_time <- as.double(out_curr_epoch$end_time)
@@ -189,7 +189,7 @@ validate_demes <- function(inp){
 
       if (j == 1){
         if (is.null(out_curr_epoch$end_size) & is.null(out_curr_epoch$start_size)){
-          stop(paste("In the first epoch in each deme, at least one of start_size or end_size must be specified, possibly via default values. In deme", i, "both values were missing."), .call=FALSE)
+          stop(paste("In the first epoch in each deme, at least one of start_size or end_size must be specified, possibly via default values. In deme", i, "both values were missing."), call.=FALSE)
         } else if (is.null(out_curr_epoch$start_size)){
           out_curr_epoch$start_size <- as.double(out_curr_epoch$end_size)
         } else if (is.null(out_curr_epoch$end_size)){
@@ -197,7 +197,7 @@ validate_demes <- function(inp){
         }
 
         if (out$demes[[i]]$start_time == Inf & out_curr_epoch$start_size != out_curr_epoch$end_size){
-          stop(paste("If a deme has an infinite start_time, its first epoch must have identical start and end sizes, but in deme", i, "this is violated."), .call=FALSE)
+          stop(paste("If a deme has an infinite start_time, its first epoch must have identical start and end sizes, but in deme", i, "this is violated."), call.=FALSE)
         }
       } else {
         if (is.null(out_curr_epoch$start_size)){
@@ -225,7 +225,7 @@ validate_demes <- function(inp){
       }
 
       if (out_curr_epoch$start_time == Inf & out_curr_epoch$size_function != "constant"){
-        stop(paste("If epoch start_time infinite, the size_function must be constant. In deme", i, "epoch", j, "the size function is", out_curr_epoch$size_function, "instead."), .call=FALSE)
+        stop(paste("If epoch start_time infinite, the size_function must be constant. In deme", i, "epoch", j, "the size function is", out_curr_epoch$size_function, "instead."), call.=FALSE)
       }
 
       # Selfing rate
@@ -267,7 +267,7 @@ validate_demes <- function(inp){
       if (is.null(out$migrations[[i]]$rate) & !is.null(inp$defaults$migration$rate)){
         out$migrations[[i]]$rate <- as.double(inp$defaults$migration$rate)
       } else if (is.null(out$migrations[[i]]$rate)){
-        stop(paste0("If a migration is specified, a migration rate must be specified, possibly via default values. This is violated in migration", i, "."), .call=FALSE)
+        stop(paste0("If a migration is specified, a migration rate must be specified, possibly via default values. This is violated in migration", i, "."), call.=FALSE)
       } else {
         out$migrations[[i]]$rate <- as.double(out$migrations[[i]]$rate)
       }
@@ -301,17 +301,17 @@ validate_demes <- function(inp){
         migr_mode <- "symmetric"
       } else {
         stop(paste("Mode of migration (either symmetric or asymmetric) could not be determined for migration", i, ". For asymmetric migration,
-                   'dest' and 'source' must be specified and 'demes' must be NULL and for symmetric migration it is the other way around."), .call=FALSE)
+                   'dest' and 'source' must be specified and 'demes' must be NULL and for symmetric migration it is the other way around."), call.=FALSE)
       }
 
       # Symmetric Migration
       if (migr_mode == "symmetric"){
         if (length(out$migrations[[i]]$demes) < 2){
-          stop(paste("Symmetric migration requires at least two populations to be specified in 'migrations$demes', but fewer than 2 populations were specified for symmetric migration in migration", i, ". This cannot be resolved."), .call=FALSE)
+          stop(paste("Symmetric migration requires at least two populations to be specified in 'migrations$demes', but fewer than 2 populations were specified for symmetric migration in migration", i, ". This cannot be resolved."), call.=FALSE)
         } else if (length(out$migrations[[i]]$demes) != length(unique(out$migrations[[i]]$demes))){
-          stop(paste("Symmetric migration requires distinct populations to be specified in 'migrations$demes', but in migration", i, " not all population names were unique."), .call=FALSE)
+          stop(paste("Symmetric migration requires distinct populations to be specified in 'migrations$demes', but in migration", i, " not all population names were unique."), call.=FALSE)
         } else if (!all(out$migrations[[i]]$demes %in% names(out$demes))){
-          stop(paste("Symmetric migration requires all specified populations to correspond to resolved demes. This was not the case in migration", i, ", where populations", out$migrations[[i]]$demes[out$migrations[[i]]$demes %in% names(out$demes)], "did not correspond to defined demes."), .call=FALSE)
+          stop(paste("Symmetric migration requires all specified populations to correspond to resolved demes. This was not the case in migration", i, ", where populations", out$migrations[[i]]$demes[out$migrations[[i]]$demes %in% names(out$demes)], "did not correspond to defined demes."), call.=FALSE)
         }
 
         # Saving symmetric migration at pos i and resetting migration at pos i
@@ -379,25 +379,25 @@ validate_demes <- function(inp){
       if (is.null(inp$pulses[[i]]$sources) & !is.null(inp$defaults$pulse$sources)){
         out$pulses[[i]]$sources <- inp$defaults$pulse$sources
       } else if (is.null(inp$pulses[[i]]$sources)){
-        stop(paste("No sources were found for pulse", i, ". They are required for pulse resolution, however."), .call=F)
+        stop(paste("No sources were found for pulse", i, ". They are required for pulse resolution, however."), call.=F)
       }
       # Proportions
       if (is.null(inp$pulses[[i]]$proportions) & !is.null(inp$defaults$pulse$proportions)){
         out$pulses[[i]]$proportions <- inp$defaults$pulse$proportions
       } else if (is.null(inp$pulses[[i]]$proportions)){
-        stop(paste("No proportions were found for pulse", i, ". They are required for pulse resolution, however."), .call=F)
+        stop(paste("No proportions were found for pulse", i, ". They are required for pulse resolution, however."), call.=F)
       }
       # Dest
       if (is.null(inp$pulses[[i]]$dest) & !is.null(inp$defaults$pulse$dest)){
         out$pulses[[i]]$dest <- inp$defaults$pulse$dest
       } else if (is.null(inp$pulses[[i]]$dest)){
-        stop(paste("No dest was found for pulse", i, ". It is required for pulse resolution, however."), .call=F)
+        stop(paste("No dest was found for pulse", i, ". It is required for pulse resolution, however."), call.=F)
       }
       # Time
       if (is.null(inp$pulses[[i]]$time) & !is.null(inp$defaults$pulse$time)){
         out$pulses[[i]]$time <- inp$defaults$pulse$time
       } else if (is.null(inp$pulses[[i]]$time)){
-        stop(paste("No time was found for pulse", i, ". It is required for pulse resolution, however."), .call=F)
+        stop(paste("No time was found for pulse", i, ". It is required for pulse resolution, however."), call.=F)
       }
       pulse_times[i] <- out$pulses[[i]]$time
     }
@@ -409,7 +409,7 @@ validate_demes <- function(inp){
   # Final Validation
   # Demes
   if (length(out$demes) == 0){
-    stop("There must be at least one deme, but none were specified.", .call=F)
+    stop("There must be at least one deme, but none were specified.", call.=F)
   }
   deme_names <- unlist(lapply(out$demes, function(x){return(x$name)}))
   if (length(deme_names) != length(unique(deme_names))){
