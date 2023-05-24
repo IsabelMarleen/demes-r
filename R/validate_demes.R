@@ -36,6 +36,10 @@ validate_demes <- function(inp){
   }
 
   # Demes validation
+  if (length(inp$demes) == 0){
+    stop("There must be at least one deme.", call. = FALSE)
+  }
+
   for (i in 1:length(inp$demes)){
     # Attempting to validate deme-level defaults insofar as possible
     if (!all(inp$demes[[i]]$defaults$epoch$start_size >= 0 & !is.null(inp$demes[[i]]$defaults$epoch$start_size))){
@@ -45,6 +49,8 @@ validate_demes <- function(inp){
     # Name
     if (is.null(inp$demes[[i]]$name)){
       stop(paste("Every deme must have a name, but deme", i, "does not have one.", call.=F))
+    } else if (inp$demes[[i]]$name %in% sapply(out$demes, function(.x){.x$name})[-i]){
+      stop(paste0("Each deme's name must be unique in the model, but ", inp$demes[[i]]$name, " appeared several times."), call. = FALSE)
     }
 
     # Description
@@ -113,7 +119,7 @@ validate_demes <- function(inp){
     }
 
     if (out$demes[[i]]$start_time == Inf & length(out$demes[[i]]$ancestors) != 0){
-      stop(paste0("If the start_time of a deme is infinity, ancestors must be an empty list. This is violated in deme ", i, "."), call.=F)
+      stop(paste0("If the start_time of a deme is infinity, ancestors must be an empty list. This is violated in deme ", i, ", ", out$demes[[i]]$name,"."), call.=F)
     } else if (out$demes[[i]]$start_time != Inf & length(out$demes[[i]]$ancestors) == 0){
       stop(paste0("If a deme has a finite start_time, it must have specified ancestors. This is violated in deme ", i, "."), call.=F)
     }
@@ -253,6 +259,12 @@ validate_demes <- function(inp){
       out$demes[[i]]$epochs[[j]] <- out_curr_epoch
     }
   }
+
+  # Epoch validation
+  num_epochs_per_deme <- sapply(out$demes, function(.x){length(.x$epochs)})
+  if (any(num_epochs_per_deme < 1)){
+    stop(paste0("Each deme must have at least one epoch, but deme ", out$demes[num_epochs_per_deme < 1][[1]]$name, " violated this."))
+  } #else if ()
 
   out <- name_demes(out)
 

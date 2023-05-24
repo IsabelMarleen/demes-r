@@ -18,7 +18,7 @@ setup_env <- function(PYTHON_ENV = "demes-r"){
 # Demes specification repository (scripts and test files)
 get_spec_dir <- function() {
   # note: can be changed to a fixed location for easier development work
-  file.path(tempdir(), "demes-spec-bc0aee7c596fe1c2eac9e7ba3c66a382108e34a6")
+  file.path(tempdir(), "demes-spec-44803a99f28209560948acab1a6b4106ec2c0283")
 }
 
 # Download Demes specification repository containing Python scripts and test files
@@ -27,7 +27,7 @@ setup_demes_spec <- function() {
     tmp_dir <- tempdir()
     demes_spec_zip <- tempfile()
     download.file(
-      url = "https://github.com/popsim-consortium/demes-spec/archive/bc0aee7c596fe1c2eac9e7ba3c66a382108e34a6.zip",
+      url = "https://github.com/popsim-consortium/demes-spec/archive/44803a99f28209560948acab1a6b4106ec2c0283.zip",
       destfile = demes_spec_zip, quiet = TRUE
     )
     unzip(demes_spec_zip, exdir = tempdir())

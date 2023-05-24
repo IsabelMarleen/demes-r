@@ -30,9 +30,8 @@ test_that("R parser results match the reference implementation in Python", {
   # get all valid test YAML files available in the Demes specification repository
   test_files <- file.path(get_spec_dir(), "test-cases", "valid") %>% list.files(pattern = ".yaml")
   # Remove files that cannot be parsed
-  # The first three don't pass because they have a deme named "y" and that is interpreted as TRUE in yaml 1.1 which is what the reader is based on
-  # For the last one it is the pre-parsed file that causes issues. It cannot be read by yaml::read_yaml without causing an error unless encoding UTF-16 is specified
-  test_files <- test_files[!(test_files %in% c("toplevel_defaults_deme_01.yaml", "successors_predecessors_01.yaml", "deme_end_time_01.yaml", "unicode_deme_name_04.yaml"))]
+  # The pre-parsed file that causes issues. It cannot be read by yaml::read_yaml without causing an error unless encoding UTF-16 is specified
+  test_files <- test_files[!(test_files %in% c("unicode_deme_name_04.yaml"))]
 
   for (f in test_files){
     path_preparsed_file <- parse_ref(get_test_file(f))
@@ -72,7 +71,6 @@ test_that("R parser results match the reference implementation in Python", {
 #   for (f in test_files){
 #     inp <- yaml::read_yaml(get_invalid_test_file(f))
 #     try(validate_demes(inp))
-#     print(f)
 #     expect_error(validate_demes(inp), label = f)
 #   }
 # })
